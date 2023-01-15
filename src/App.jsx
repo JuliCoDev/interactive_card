@@ -1,10 +1,10 @@
 import './App.css';
-
+import Dashboard from './pages/Dashboard';
 export default function App() {
   return (
-    <h1 className="text-center">
-      INTERACTIVE CREADIT CARD
-    </h1>
+    <>
+      <Dashboard />
+    </>
   )
 }
 

@@ -4,7 +4,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'ligth' : "hsl(249, 99%, 64%)",
+        'semi-dark' : "hsl(278, 94%, 30%)",
+        'dark' : "hsl(278, 68%, 15%)"
+      },
+      fontFamily: {
+        space: ['Space Grotesk'],
+      },     
+    },
   },
   plugins: [],
 }

@@ -4,9 +4,13 @@ const Input = tw.input`
     outline-none
     border
     border-gray-200
-    focus:border-semi-darck
+    focus:border-semi-dark
     rounded-md
-    p-2
+    py-1
+    px-2
+    w-full
+    h-10
+    mb-4
     
 `;
 
