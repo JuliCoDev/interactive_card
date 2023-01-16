@@ -30,7 +30,8 @@ export default function Dashboard(){
         validateRequired,
         ValidateCardNumber,
         validateMonth,
-        validateYear
+        validateYear,
+        validateCvc,
 
     } = useValidateInputCard(cardValues);
 
@@ -146,7 +147,7 @@ export default function Dashboard(){
                         type="text"    
                         maxLength={3} 
                         value={formatCardInput.cvc}    
-                        onBlur={(e) => validateInput(e)}
+                        onBlur={(e) => validateCvc(e.target.value)}
                         className={validationInput.cvc.style}
                     />
                     {!validationInput.cvc.isValid && 

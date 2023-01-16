@@ -77,13 +77,27 @@ const useValidateInputCard = (intialValues) =>{
         }
     }
 
+    const validateCvc = (value) =>{
+        let required = validateRequired("cvc", value);
+       
+        if(value.length < 3 && required){
+
+            setvalidationInput({...validationInput,
+                cvc: { ...error }
+            })
+        }else if(required){
+            validateCorrect("cvc");
+        }
+    }
+
 
     return{
         validationInput, 
         ValidateCardNumber,
         validateMonth,
         validateYear,
-        validateRequired
+        validateRequired,
+        validateCvc
 
     }
 }
