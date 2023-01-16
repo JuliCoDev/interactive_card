@@ -9,9 +9,7 @@ const Input = tw.input`
     py-1
     px-2
     w-full
-    h-10
-    mb-4
-    
+    h-10   
 `;
 
 export default Input;

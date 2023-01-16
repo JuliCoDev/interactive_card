@@ -2,13 +2,16 @@ import Input from "../styleComponents/Input";
 import Label from "../styleComponents/Label";
 import Button from "../styleComponents/Button";
 import useFormatInputCard from "../hooks/useFormatInputCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useValidateInputCard from "../hooks/useValidateInputCard";
+import ErrorInput from "../styleComponents/ErrorInput";
 
 const initialValues = {
     cardholderName: '',
     cardNumber: '',
     month: '',
-    year: ''
+    year: '',
+    cvc:''
 } 
 
 
@@ -22,13 +25,22 @@ export default function Dashboard(){
         changeFormatCardNumber,
     } = useFormatInputCard(cardValues);
     
+    const {
+        validationInput, 
+        validateRequired,
+        ValidateCardNumber,
+        validateMonth,
+        validateYear
 
-    const handleChange = (e) =>{
+    } = useValidateInputCard(cardValues);
+
+
+    const handleChange   = (e) =>{
         setCardValues({
             [e.target.name] : e.target.value
         })   
         
-        if([e.target.name] == "cardNumber"){
+        if([e.target.name] === "cardNumber"){
             changeFormatCardNumber("cardNumber" , e.target.value);  
         }else if([e.target.name] !== "cardholderName"){
             changeFormatOnlyNumbers([e.target.name] , e.target.value)
@@ -37,30 +49,53 @@ export default function Dashboard(){
     }
 
 
+    const validateInput = (e) =>{
+        validateRequired(e.target.name , e.target.value)
+    }
+
+
+    
     
     return(
+
         <form className="w-4/5 m-auto mt-4">
             
-
-            <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
-            <Input 
-                onChange={(e) => handleChange(e)} 
-                name="cardholderName" 
-                placeholder="e.g Jane Appleseed" 
-                type="text"              
-            />
-
-            <Label htmlFor="cardNumber">CARD NUMBER</Label>
-            <Input 
-                onChange={(e) => handleChange(e) } 
-                name="cardNumber" 
-                placeholder="e.g. 1234 5678 9123 0000"
-                type="text"   
-                maxLength={19}     
-                value={formatCardInput.cardNumber}                          
-            />
+            <div className="mb-4">
+                <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
+                <Input 
+                    onChange={(e) => handleChange(e)} 
+                    name="cardholderName" 
+                    placeholder="e.g Jane Appleseed" 
+                    type="text" 
+                    onBlur={(e) => validateRequired(e.target.name, e.target.value)}     
+                    className={validationInput.cardholderName.style}       
+                />
+                {!validationInput.cardholderName.isValid && 
+                    <ErrorInput>
+                        {validationInput.cardholderName.message}
+                    </ErrorInput>                  
+                }
+            </div>
+            <div className="mb-4">
+                <Label htmlFor="cardNumber">CARD NUMBER</Label>
+                <Input 
+                    onChange={(e) => handleChange(e) } 
+                    name="cardNumber" 
+                    placeholder="e.g. 1234 5678 9123 0000"
+                    type="text"   
+                    maxLength={19}     
+                    value={formatCardInput.cardNumber}    
+                    onBlur={(e) => ValidateCardNumber(e.target.value)}
+                    className={validationInput.cardNumber.style}                        
+                />
+                {!validationInput.cardNumber.isValid && 
+                    <ErrorInput>
+                        {validationInput.cardNumber.message}
+                    </ErrorInput>                  
+                }
+            </div>
             
-            <div className="flex justify-between ">               
+            <div className="flex justify-between mb-4 ">               
                 <div className="w-2/4 ">
                     <Label className="block">EXP. DATE</Label>
                     <div className="flex justify-between">
@@ -71,9 +106,16 @@ export default function Dashboard(){
                                 placeholder="MM" 
                                 type="text"
                                 maxLength={2}     
-                                value={formatCardInput.month}    
+                                value={formatCardInput.month} 
+                                onBlur={(e) => validateMonth(e.target.value)}
+                                className={validationInput.month.style}
 
                             />
+                            {!validationInput.month.isValid && 
+                                <ErrorInput>
+                                    {validationInput.month.message}
+                                </ErrorInput>                  
+                            }
                         </div>
                         <div className="inline-block w-2/4" >
                             <Input 
@@ -82,8 +124,15 @@ export default function Dashboard(){
                                 placeholder="YY" 
                                 type="text"    
                                 maxLength={2} 
-                                value={formatCardInput.year}                  
+                                value={formatCardInput.year}
+                                onBlur={(e) => validateYear(e.target.value)}
+                                className={validationInput.year.style}                  
                             />
+                            {!validationInput.year.isValid && 
+                                <ErrorInput>
+                                    {validationInput.year.message}
+                                </ErrorInput>                  
+                            }
                         </div>
                     </div>
                 </div>
@@ -97,7 +146,14 @@ export default function Dashboard(){
                         type="text"    
                         maxLength={3} 
                         value={formatCardInput.cvc}    
+                        onBlur={(e) => validateInput(e)}
+                        className={validationInput.cvc.style}
                     />
+                    {!validationInput.cvc.isValid && 
+                        <ErrorInput>
+                            {validationInput.cvc.message}
+                        </ErrorInput>                  
+                    }
                 </div>
             </div>
             <div>
