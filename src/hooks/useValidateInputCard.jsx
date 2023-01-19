@@ -5,9 +5,11 @@ const error = {
     message: "Wrong format",
     style: "border-red-500 focus:border-red-500"
 }
+
 const useValidateInputCard = (intialValues) =>{
 
     const [validationInput , setvalidationInput] = useState(intialValues);
+
     const currentYear = new Date().getFullYear();
 
 
@@ -20,21 +22,29 @@ const useValidateInputCard = (intialValues) =>{
             }
         })
     }
-
+ 
     //The input can''t be emty
-    const validateRequired = (name, value) =>{
-        
-        if(!value){
-            setvalidationInput({...validationInput,
-                [name]: {
-                    isValid : false,
-                    message: "Can't be blanck",
-                    style: "border-red-500 focus:border-red-500"
+    const validateRequired = (name, value) =>{ 
+  
+        if(typeof value === 'string' && value.trim().length === 0){            
+            setvalidationInput((prevState) => {
+                console.log(prevState);
+                return{
+                    ...prevState,
+                    [name]: {
+                        isValid : false,
+                        message: "Can't be blanck",
+                        style: "border-red-500 focus:border-red-500"
+                    }
                 }
+                
             })
+
+
             return false;
 
         }
+        validateCorrect(name);
         return true
     }
 
