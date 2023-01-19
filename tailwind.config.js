@@ -8,7 +8,8 @@ module.exports = {
       colors:{
         'ligth' : "hsl(249, 99%, 64%)",
         'semi-dark' : "hsl(278, 94%, 30%)",
-        'dark' : "hsl(278, 68%, 15%)"
+        'dark' : "hsl(278, 68%, 15%)",
+        'dark-grayish' : "hsl(279, 6%, 55%)"
       },
       fontFamily: {
         space: ['Space Grotesk'],

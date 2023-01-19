@@ -5,6 +5,8 @@ import useFormatInputCard from "../hooks/useFormatInputCard";
 import { useState } from "react";
 import useValidateInputCard from "../hooks/useValidateInputCard";
 import ErrorInput from "../styleComponents/ErrorInput";
+import Complete from "./Complete";
+
 
 const initialValues = {
     cardholderName: '',
@@ -19,7 +21,7 @@ const initialValues = {
 export default function Dashboard(){
 
     const [cardValues , setCardValues ] = useState(initialValues);
-    const [error , setError ] = useState(false);
+    const [complete , setComplete ] = useState(false);
     
     //Format input
     const {
@@ -59,8 +61,8 @@ export default function Dashboard(){
 
         const validations  =  Object.values(validationInput);
 
-        setError(validations.some((validation) => {
-            return !validation.isValid
+        setComplete(validations.some((validation) => {
+            return validation.isValid
         }))
 
         Object.keys(cardValues).map((key) => {
@@ -70,9 +72,9 @@ export default function Dashboard(){
 
     }
     
-    
-    return(
-        <>
+    if(!complete){
+        return(
+            
             <form className="w-4/5 m-auto mt-4" onSubmit={handleSubmit}>
                 
                 <div className="mb-4">
@@ -124,7 +126,7 @@ export default function Dashboard(){
                                     value={formatCardInput.month} 
                                     onBlur={(e) => validateMonth(e.target.value)}
                                     className={validationInput.month.style}
-
+    
                                 />
                                 {!validationInput.month.isValid && 
                                     <ErrorInput>
@@ -151,7 +153,7 @@ export default function Dashboard(){
                             </div>
                         </div>
                     </div>
-
+    
                     <div className="w-2/4 box-border pl-2 ">
                         <Label className="block">CVC</Label>
                         <Input 
@@ -177,9 +179,11 @@ export default function Dashboard(){
                     </Button>
                 </div>
             </form>
-            {error && 
-                <h1>ERROR</h1>
-            }
-        </>
+            
+        )
+    }
+
+    return(
+        <Complete />
     )
 }
