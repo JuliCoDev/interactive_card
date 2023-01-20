@@ -13,8 +13,9 @@ const initialValues = {
     cardholderName: '',
     cardNumber: '',
     month: '',
-    year: '',
     cvc:'',
+    year: '',
+    
    
 } 
 
@@ -62,13 +63,22 @@ export default function Dashboard(){
 
         const validations  =  Object.values(validationInput);
 
-        setComplete(validations.some((validation) => {
-            return validation.isValid
-        }))
+        Object.keys(validationInput).map((error) => {            
+            Object.keys(cardValues).map((key) => {
+                if(cardValues[key] == '' && !validationInput[error]?.isValid){
+                validateRequired(key, cardValues[key]); 
+                }              
+            })    
+        })
 
-        Object.keys(cardValues).map((key) => {
-            validateRequired(key, cardValues[key]);               
-        });
+        
+        const isComplete = validations.some((validation) => {            
+            return !validation.isValid
+        })
+
+        if(!isComplete){
+            setComplete(true)
+        }
 
 
     }

@@ -13,7 +13,7 @@ const useValidateInputCard = (intialValues) =>{
     const currentYear = new Date().getFullYear();
 
 
-    const validateCorrect = (name) =>{
+    const validateCorrect = (name) =>{        
         setvalidationInput({...validationInput,
             [name]: {
                 isValid : true,
@@ -26,9 +26,9 @@ const useValidateInputCard = (intialValues) =>{
     //The input can''t be emty
     const validateRequired = (name, value) =>{ 
   
-        if(typeof value === 'string' && value.trim().length === 0){            
-            setvalidationInput((prevState) => {
-                console.log(prevState);
+        if(typeof value === 'string' && value.trim().length === 0){    
+
+            setvalidationInput((prevState) => {                          
                 return{
                     ...prevState,
                     [name]: {
@@ -39,8 +39,6 @@ const useValidateInputCard = (intialValues) =>{
                 }
                 
             })
-
-
             return false;
 
         }
