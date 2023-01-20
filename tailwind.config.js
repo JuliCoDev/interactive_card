@@ -13,7 +13,13 @@ module.exports = {
       },
       fontFamily: {
         space: ['Space Grotesk'],
-      },     
+      },   
+      width: {
+        'card-md': '28rem',
+      },
+      height: {
+        'card-md': '15rem',
+      }  
     },
   },
   plugins: [],
