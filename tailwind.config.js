@@ -15,10 +15,10 @@ module.exports = {
         space: ['Space Grotesk'],
       },   
       width: {
-        'card-md': '28rem',
+        
       },
       height: {
-        'card-md': '15rem',
+        'card-mobile' : '150px'        
       }  
     },
   },

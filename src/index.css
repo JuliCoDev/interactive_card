@@ -14,3 +14,16 @@ html{
     font-semibold
 
 }
+
+body{    
+
+    @apply 
+    bg-[url("./assets/bg-main-mobile.png")]
+    bg-no-repeat
+    bg-[length:100%_250px]
+
+    /* 
+    lg:bg-[url('./assets/bg-main-desktop.png')]
+    lg:bg-[length:30%_100vh] */
+
+}
