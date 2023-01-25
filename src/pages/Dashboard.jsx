@@ -7,6 +7,9 @@ import useValidateInputCard from "../hooks/useValidateInputCard";
 import ErrorInput from "../styleComponents/ErrorInput";
 import Complete from "./Complete";
 import Card from "../styleComponents/Card";
+import CardBack from "../components/Cards/CardBack";
+import CardFront from "../components/Cards/CardFront";
+import Cards from "./Cards";
 
 
 const initialValues = {
@@ -86,29 +89,9 @@ export default function Dashboard(){
     if(!complete){
         return(
             <div>  
-                <div className="relative m-auto w-[380px]">
-                    <Card className={`text-white bg-[url("./assets/bg-card-back.png")] relative p-6 left-10 top-12`}>
-                        <div className="font-medium text-sm">
-                            <p className="absolute top-[44%] right-[40px]">{cardValues.cvc}</p>
-                        </div>
-                    </Card>
-
-
-                    <Card className={`text-white bg-[url("./assets/bg-card-front.png")] relative p-6`}>                    
-                        <div className="font-medium text-sm">
-                            <p className="absolute bottom-1/2">{cardValues.cardNumber}</p>
-                        </div>
-                        <div className="font-light text-xs tracking-normal">
-                            <p className="absolute bottom-6 w-3/5 whitespace-pre-wrap">
-                                {cardValues.cardholderName}
-                            </p>
-                            <p className="absolute bottom-6 right-6">
-                                {cardValues.month}/{cardValues.year}
-                            </p>
-                        </div>
-                    </Card>
-
-                </div>
+                <Cards cardValues={cardValues}/>
+                    
+                
                 <form className="w-4/5 m-auto mt-12" onSubmit={handleSubmit}>
                     
                     <div className="mb-4">

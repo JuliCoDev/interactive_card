@@ -10,6 +10,9 @@ const Card = tw.div`
     bg-cover
     bg-no-repeat	
     absolute	
+    relative 
+    p-6
+    text-white
 `;
 
 export default Card;
