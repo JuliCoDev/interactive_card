@@ -1,15 +1,13 @@
-import Input from "../styleComponents/Input";
+import {default as InputStyle} from "../styleComponents/Input";
+import ErrorInput from "../styleComponents/ErrorInput";
 import Label from "../styleComponents/Label";
 import Button from "../styleComponents/Button";
 import useFormatInputCard from "../hooks/useFormatInputCard";
-import { useState } from "react";
 import useValidateInputCard from "../hooks/useValidateInputCard";
-import ErrorInput from "../styleComponents/ErrorInput";
+import { useState } from "react";
 import Complete from "./Complete";
-import Card from "../styleComponents/Card";
-import CardBack from "../components/Cards/CardBack";
-import CardFront from "../components/Cards/CardFront";
 import Cards from "./Cards";
+import Input from "../components/Input";
 
 
 const initialValues = {
@@ -28,13 +26,7 @@ export default function Dashboard(){
     const [cardValues , setCardValues ] = useState(initialValues);
     const [complete , setComplete ] = useState(false);
     
-    //Format input
-    const {
-        formatCardInput,
-        changeFormatOnlyNumbers,
-        changeFormatCardNumber,
-    } = useFormatInputCard(cardValues);
-    
+       
     //Validate input
     const {
         validationInput, 
@@ -43,24 +35,12 @@ export default function Dashboard(){
         validateMonth,
         validateYear,
         validateCvc,
+        validateVardName,
 
     } = useValidateInputCard(cardValues);
 
 
-    const handleChange   = (e) =>{
-        setCardValues({
-            ...cardValues,
-            [e.target.name] : e.target.value
-        })   
-        
-        if([e.target.name] == "cardNumber"){
-            changeFormatCardNumber("cardNumber" , e.target.value);  
-        }else if([e.target.name] !== "cardholderName"){
-            changeFormatOnlyNumbers([e.target.name] , e.target.value)
-          
-        }
-    }
-
+   
     const handleSubmit = (e) =>{
         e.preventDefault();
 
@@ -96,37 +76,28 @@ export default function Dashboard(){
                     
                     <div className="mb-4">
                         <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
-                        <Input 
-                            onChange={(e) => handleChange(e)} 
+                        <Input                             
                             name="cardholderName" 
                             placeholder="e.g Jane Appleseed" 
-                            type="text" 
-                            onBlur={(e) => validateRequired(e.target.name, e.target.value)}     
-                            className={validationInput.cardholderName.style}       
-                        />
-                        {!validationInput.cardholderName.isValid && 
-                            <ErrorInput>
-                                {validationInput.cardholderName.message}
-                            </ErrorInput>                  
-                        }
+                            type="text"                              
+                            vaidateInput={validateVardName}
+                            validationInput={validationInput}
+                            cardValues={cardValues}
+                            setCardValues={setCardValues} 
+                        />                        
                     </div>
                     <div className="mb-4">
                         <Label htmlFor="cardNumber">CARD NUMBER</Label>
-                        <Input 
-                            onChange={(e) => handleChange(e) } 
+                        <Input                            
                             name="cardNumber" 
                             placeholder="e.g. 1234 5678 9123 0000"
-                            type="text"   
-                            maxLength={19}     
-                            value={formatCardInput.cardNumber}    
-                            onBlur={(e) => ValidateCardNumber(e.target.value)}
-                            className={validationInput.cardNumber.style}                        
+                            type="text"                               
+                            maxLength={19}   
+                            vaidateInput={ValidateCardNumber}
+                            validationInput={validationInput}
+                            cardValues={cardValues}
+                            setCardValues={setCardValues}  
                         />
-                        {!validationInput.cardNumber.isValid && 
-                            <ErrorInput>
-                                {validationInput.cardNumber.message}
-                            </ErrorInput>                  
-                        }
                     </div>
                     
                     <div className="flex justify-between mb-4 ">               
@@ -135,38 +106,27 @@ export default function Dashboard(){
                             <div className="flex justify-between">
                                 <div className="inline-block w-2/4 box-border pr-2" >
                                     <Input 
-                                        onChange={(e) => handleChange(e)} 
                                         name="month" 
                                         placeholder="MM" 
                                         type="text"
-                                        maxLength={2}     
-                                        value={formatCardInput.month} 
-                                        onBlur={(e) => validateMonth(e.target.value)}
-                                        className={validationInput.month.style}
-        
+                                        cardValues={cardValues}
+                                        setCardValues={setCardValues}  
+                                        maxLength={2}   
+                                        vaidateInput={validateMonth}
+                                        validationInput={validationInput}
                                     />
-                                    {!validationInput.month.isValid && 
-                                        <ErrorInput>
-                                            {validationInput.month.message}
-                                        </ErrorInput>                  
-                                    }
                                 </div>
                                 <div className="inline-block w-2/4" >
                                     <Input 
-                                        onChange={(e) => handleChange(e)} 
                                         name="year" 
                                         placeholder="YY" 
                                         type="text"    
-                                        maxLength={2} 
-                                        value={formatCardInput.year}
-                                        onBlur={(e) => validateYear(e.target.value)}
-                                        className={validationInput.year.style}                  
+                                        cardValues={cardValues}
+                                        setCardValues={setCardValues}  
+                                        maxLength={2}   
+                                        vaidateInput={validateYear}
+                                        validationInput={validationInput}                
                                     />
-                                    {!validationInput.year.isValid && 
-                                        <ErrorInput>
-                                            {validationInput.year.message}
-                                        </ErrorInput>                  
-                                    }
                                 </div>
                             </div>
                         </div>
@@ -174,20 +134,15 @@ export default function Dashboard(){
                         <div className="w-2/4 box-border pl-2 ">
                             <Label className="block">CVC</Label>
                             <Input 
-                                onChange={(e) => handleChange(e)} 
                                 name="cvc" 
                                 placeholder="e.g. 123" 
                                 type="text"    
-                                maxLength={3} 
-                                value={formatCardInput.cvc}    
-                                onBlur={(e) => validateCvc(e.target.value)}
-                                className={validationInput.cvc.style}
+                                cardValues={cardValues}
+                                setCardValues={setCardValues}  
+                                maxLength={3}   
+                                vaidateInput={validateCvc}
+                                validationInput={validationInput}  
                             />
-                            {!validationInput.cvc.isValid && 
-                                <ErrorInput>
-                                    {validationInput.cvc.message}
-                                </ErrorInput>                  
-                            }
                         </div>
                     </div>
                     <div>

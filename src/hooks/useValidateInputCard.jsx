@@ -25,7 +25,7 @@ const useValidateInputCard = (intialValues) =>{
  
     //The input can''t be emty
     const validateRequired = (name, value) =>{ 
-  
+        
         if(typeof value === 'string' && value.trim().length === 0){    
 
             setvalidationInput((prevState) => {                          
@@ -46,8 +46,14 @@ const useValidateInputCard = (intialValues) =>{
         return true
     }
 
-    const ValidateCardNumber =  (value) =>{   
-        
+    const validateVardName = (value) =>{
+        let required = validateRequired("cardholderName",value);   
+        if(required){
+            validateCorrect("cardholderName");
+        }
+    }
+
+    const ValidateCardNumber =  (value) =>{           
         let required = validateRequired("cardNumber",value);   
         if(value.length < 19 && required){
             setvalidationInput({...validationInput,
@@ -105,7 +111,9 @@ const useValidateInputCard = (intialValues) =>{
         validateMonth,
         validateYear,
         validateRequired,
-        validateCvc
+        validateCvc,
+        validateVardName
+        
 
     }
 }
