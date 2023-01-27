@@ -1,8 +1,7 @@
 import { default as InputContainer} from "../styleComponents/Input"
 import useFormatInputCard from "../hooks/useFormatInputCard";
-import useValidateInputCard from "../hooks/useValidateInputCard";
-import { useEffect } from "react";
 import ErrorInput from "../styleComponents/ErrorInput";
+
 
 export default function Input({
     name,
@@ -20,9 +19,6 @@ export default function Input({
         changeFormatOnlyNumbers,
         changeFormatCardNumber,
     } = useFormatInputCard(cardValues);
-
-    
-
     
     const handleChange   = (e) =>{
         setCardValues({

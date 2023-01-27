@@ -13,6 +13,7 @@ const Card = tw.div`
     relative 
     p-6
     text-white
+    md:block
 `;
 
 export default Card;

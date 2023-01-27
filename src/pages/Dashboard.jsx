@@ -1,8 +1,6 @@
-import {default as InputStyle} from "../styleComponents/Input";
-import ErrorInput from "../styleComponents/ErrorInput";
 import Label from "../styleComponents/Label";
 import Button from "../styleComponents/Button";
-import useFormatInputCard from "../hooks/useFormatInputCard";
+
 import useValidateInputCard from "../hooks/useValidateInputCard";
 import { useState } from "react";
 import Complete from "./Complete";
@@ -53,7 +51,6 @@ export default function Dashboard(){
                 }              
             })    
         })
-
         
         const isComplete = validations.some((validation) => {            
             return !validation.isValid
@@ -68,12 +65,9 @@ export default function Dashboard(){
     
     if(!complete){
         return(
-            <div>  
-                <Cards cardValues={cardValues}/>
-                    
-                
-                <form className="w-4/5 m-auto mt-12" onSubmit={handleSubmit}>
-                    
+            <div className="md:flex md:w-11/12">  
+                <Cards cardValues={cardValues}/>                                    
+                <form className="w-4/5 m-auto mt-12 md:w-1/2 md:max-w-[350px]" onSubmit={handleSubmit}>                    
                     <div className="mb-4">
                         <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
                         <Input                             
