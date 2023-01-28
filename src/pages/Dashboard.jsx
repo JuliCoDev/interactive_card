@@ -65,9 +65,9 @@ export default function Dashboard(){
     
     if(!complete){
         return(
-            <div className="md:flex md:w-11/12">  
+            <div className="md:flex md:w-11/12 ">  
                 <Cards cardValues={cardValues}/>                                    
-                <form className="w-4/5 m-auto mt-12 md:w-1/2 md:max-w-[350px]" onSubmit={handleSubmit}>                    
+                <form className="w-4/5 m-auto mt-12 md:w-1/2 md:max-w-[350px] md:mt-auto" onSubmit={handleSubmit}>                    
                     <div className="mb-4">
                         <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
                         <Input                             

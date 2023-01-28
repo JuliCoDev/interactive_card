@@ -14,6 +14,9 @@ const Card = tw.div`
     p-6
     text-white
     md:block
+    md:mt-12    
+    lg:w-[400px]
+    lg:h-[200px]
 `;
 
 export default Card;
