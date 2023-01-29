@@ -21,8 +21,8 @@ body{
     bg-[url("./assets/bg-main-mobile.png")]
     bg-no-repeat
     bg-[length:100%_250px]
-    md:bg-[url("./assets/bg-main-desktop.png")]
-    md:bg-[length:33%_100vh]
+    lg:bg-[url("./assets/bg-main-desktop.png")]
+    lg:bg-[length:33%_100vh]
 
     /* 
     lg:bg-[url('./assets/bg-main-desktop.png')]
