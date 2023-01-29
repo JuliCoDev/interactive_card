@@ -4,9 +4,13 @@ import Card from "../styleComponents/Card";
 
 export default function Cards({cardValues}) {
     return(
-        <div className="relative m-auto w-[380px] md:w-1/2 md:block md:h-screen md:text-center">
-            <CardBack cvc={cardValues.cvc}/>
-            <CardFront cardValues={cardValues}/>
+        <div className="relative w-full h-[250px]">            
+            <div className="absolute left-[20px] top-[150px] z-10">
+                <CardFront cardValues={cardValues}/>
+            </div>
+            <div className="absolute top-[50px] right-[15px]">
+                <CardBack cvc={cardValues.cvc}/>
+            </div>
         </div>
     )
 }
