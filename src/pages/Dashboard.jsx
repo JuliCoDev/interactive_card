@@ -19,6 +19,37 @@ const initialValues = {
 } 
 
 
+const container=`     
+    h-screen
+    relative 
+    lg:flex
+    lg:items-center
+`;
+const containerCards = `
+    absolute 
+    w-full
+    lg:w-1/2
+    lg:static
+`;
+
+const formContainer=`
+    absolute 
+    top-[350px] 
+    w-full
+    lg:w-1/2
+    lg:static
+
+`;
+const Form = `
+    w-[80%] 
+    m-auto
+    md:w-[60%]    
+    lg:max-w-[380px]
+    xl:ml-[100px]
+    
+`;
+
+
 export default function Dashboard(){
 
     const [cardValues , setCardValues ] = useState(initialValues);
@@ -65,12 +96,12 @@ export default function Dashboard(){
     
     if(!complete){
         return(
-            <div className="relativeh-screen"> 
-                <div className="absolute w-full">
+            <div className={container}> 
+                <div className={containerCards}>
                     <Cards cardValues={cardValues}/>                                    
                 </div>
-                <div className="absolute top-[350px] w-full">
-                    <form className="w-[80%] m-auto" onSubmit={handleSubmit}>                    
+                <div className={formContainer}>
+                    <form className={Form} onSubmit={handleSubmit}>                    
                         <div className="mb-4">
                             <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
                             <Input                             
