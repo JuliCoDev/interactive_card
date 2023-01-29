@@ -8,6 +8,7 @@ const Card = tw.div`
     uppercase
     bg-cover
     bg-no-repeat
+    
 `;
 
 export default Card;
