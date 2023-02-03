@@ -1,27 +1,48 @@
-# Interactive Credit Card 
+# Interactive Credit Card 💳
 
 [Interactive Credit Card](https://julicodev-inteactive-card.netlify.app/) es un proyecto creado con el fin de poner en práctica habilidades de programación, buenas practicas e implementación de diferentes herramientas para poder cumplir con el desafio [Interactive card details form](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw)
 
 [Interactive Credit Card](https://julicodev-inteactive-card.netlify.app/) cuenta con diseño responsivo y validación de los campos del formulario, junto con la tarjeta que muestra los datos que el usuario ingresa en tiempo real.
 
+<div align="center">
+  <img width="60%" src="./public/images/interactive_card_desktop.png" alt="Interactive Card desktop" >
 
-## Installation
+  <img width="30%" src="./public/images/interactive_card_mobile.png" alt="Interactive Card mobile" >
+</div>
 
-### `npm start`
+### Construido con 🛠️
+* [Reactjs](https://reactjs.org/) - Una biblioteca de JavaScript para construir interfaces de usuariointerfaces
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* [Tailwind](https://tailwindcss.com/) - Un framework de CSS de primera utilidad repleto de clases
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Comenzando 🚀
 
-### `npm run build`
+### Pre-requisitos 📋
+Tener instalados npm version 8.5.5 o superior y node.js versión 16.15.0 o superior
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+https://nodejs.org/es/download/
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installación 🔧
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ejecutar la aplicación en el modo de desarrollo.
 
+1. Clone el proyecto
+
+2. Instale las dependencias
+```
+npm install
+```
+3. Corra la aplicación
+```
+npm start
+```
+
+Abra [http://localhost:3000](http://localhost:3000) para verlo en su navegador.
+
+La página se volverá a cargar cuando realice cambios.
+
+### Autores 👩‍💻 
+
+* **Juliana García Corredor** - *Desarrollo complerto de la aplicación* - [JuliCoDev](https://github.com/JuliCoDev)
