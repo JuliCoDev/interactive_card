@@ -6,7 +6,8 @@
 
 <div align="center">
   <img width="60%" src="./public/images/interactive_card_desktop.png" alt="Interactive Card desktop" >
-
+</div>
+<div align="center">
   <img width="30%" src="./public/images/interactive_card_mobile.png" alt="Interactive Card mobile" >
 </div>
 
@@ -45,4 +46,4 @@ La página se volverá a cargar cuando realice cambios.
 
 ### Autores 👩‍💻 
 
-* **Juliana García Corredor** - *Desarrollo complerto de la aplicación* - [JuliCoDev](https://github.com/JuliCoDev)
+* **Juliana García Corredor** - *Desarrollo completo de la aplicación* - [JuliCoDev](https://github.com/JuliCoDev)
