@@ -1,6 +1,10 @@
 import Card from "../../styleComponents/Card"
+import { CardData } from "../../types"
 
-export default function CardFront({cardValues}){
+interface Props{
+    cardValues: CardData
+}
+export default function CardFront({cardValues} : Props){
     return(
         <Card className={`text-white bg-[url("./assets/bg-card-front.png")] p-6`}>                    
             <div className="font-medium text-sm">

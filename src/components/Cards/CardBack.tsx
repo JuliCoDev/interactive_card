@@ -1,7 +1,7 @@
 import Card from "../../styleComponents/Card";
+import { CardData } from "../../types";
 
-
-export default function CardBack({cvc}){       
+export default function CardBack({cvc} : CardData){       
     return(                 
         <Card className="bg-[url('./assets/bg-card-back.png')]">
             <div className="absolute w-full md:relative">
