@@ -186,7 +186,7 @@ export default function Dashboard(){
     }
 
     return(
-        <div class="absolute bottom-[30%] w-full">
+        <div class="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
             <Complete setComplete={setComplete} values={initialValues} setCardValues={setCardValues}/>
         </div>
     )
