@@ -1,7 +1,18 @@
 import { default as InputContainer} from "../styleComponents/Input"
 import useFormatInputCard from "../hooks/useFormatInputCard";
 import ErrorInput from "../styleComponents/ErrorInput";
+import { CardData } from "../types";
+import React from "react";
 
+interface Props {
+    name: string
+    placeholder: string
+    cardValues: CardData
+    setCardValues : any
+    maxLength: number
+    vaidateInput : any
+    validationInput: any
+}
 
 export default function Input({
     name,
@@ -11,7 +22,7 @@ export default function Input({
     maxLength,
     vaidateInput,
     validationInput
-}) {
+}: Props) {
 
     //Format input
     const {
@@ -20,17 +31,16 @@ export default function Input({
         changeFormatCardNumber,
     } = useFormatInputCard(cardValues);
     
-    const handleChange   = (e) =>{
+    const handleChange   = (e : React.ChangeEvent<HTMLInputElement>) =>{
         setCardValues({
             ...cardValues,
             [e.target.name] : e.target.value
         })   
         
-        if([e.target.name] == "cardNumber"){
+        if(e.target.name == "cardNumber"){
             changeFormatCardNumber("cardNumber" , e.target.value);  
-        }else if([e.target.name] !== "cardholderName"){
-            changeFormatOnlyNumbers([e.target.name] , e.target.value)
-          
+        }else if(e.target.name !== "cardholderName"){
+            changeFormatOnlyNumbers(e.target.name , e.target.value)          
         }
     }
 
@@ -44,7 +54,7 @@ export default function Input({
                 type="text" 
                 onBlur={(e) => vaidateInput(e.target.value)}     
                 className={validationInput[name].style}
-                value={(name == "cardholderName") ? cardValues[name] : formatCardInput[name]}       
+                value={(name == "cardholderName") ? cardValues[name as keyof CardData] : formatCardInput[name as keyof CardData]}       
                 maxLength={maxLength}
                 
             />
