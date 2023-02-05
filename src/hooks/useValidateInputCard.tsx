@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { CardData } from "../types";
 
 const error = {
     isValid : false,
@@ -6,14 +7,28 @@ const error = {
     style: "border-red-500 focus:border-red-500"
 }
 
-const useValidateInputCard = (intialValues) =>{
+type Error = {
+    isValid : boolean
+    message: string
+    style: string
+}
 
-    const [validationInput , setvalidationInput] = useState(intialValues);
+interface ErrorData  {
+    cardholderName: Error
+    cardNumber: Error
+    month: Error
+    year: Error
+    cvc: Error
+}
+
+const useValidateInputCard = (intialValues : ErrorData) =>{
+
+    const [validationInput , setvalidationInput] = useState<ErrorData>(intialValues);
 
     const currentYear = new Date().getFullYear();
 
 
-    const validateCorrect = (name) =>{        
+    const validateCorrect = (name: string) =>{        
         setvalidationInput({...validationInput,
             [name]: {
                 isValid : true,
@@ -24,7 +39,7 @@ const useValidateInputCard = (intialValues) =>{
     }
  
     //The input can''t be emty
-    const validateRequired = (name, value) =>{ 
+    const validateRequired = (name : string, value : string) =>{ 
         
         if(typeof value === 'string' && value.trim().length === 0){    
 
@@ -46,14 +61,14 @@ const useValidateInputCard = (intialValues) =>{
         return true
     }
 
-    const validateVardName = (value) =>{
+    const validateVardName = (value: string) =>{
         let required = validateRequired("cardholderName",value);   
         if(required){
             validateCorrect("cardholderName");
         }
     }
 
-    const ValidateCardNumber =  (value) =>{           
+    const ValidateCardNumber =  (value : string ) =>{           
         let required = validateRequired("cardNumber",value);   
         if(value.length < 19 && required){
             setvalidationInput({...validationInput,
@@ -66,7 +81,7 @@ const useValidateInputCard = (intialValues) =>{
 
     
     
-    const validateMonth = ( value) =>{
+    const validateMonth = ( value : string) =>{
         let required = validateRequired("month", value);   
         if((value.length < 2 || parseInt(value) > 12)  && required){
 
@@ -78,7 +93,7 @@ const useValidateInputCard = (intialValues) =>{
         }
     }
 
-    const validateYear = (value) =>{
+    const validateYear = (value : string) =>{
         let required = validateRequired("year", value);
        
         if((value.length < 2 || parseInt(`20${value}`) < currentYear)  && required){
@@ -91,7 +106,7 @@ const useValidateInputCard = (intialValues) =>{
         }
     }
 
-    const validateCvc = (value) =>{
+    const validateCvc = (value : string) =>{
         let required = validateRequired("cvc", value);
        
         if(value.length < 3 && required){
