@@ -1,8 +1,12 @@
 import CheckLogo from '../assets/icon-complete.svg';
 import Button from '../styleComponents/Button';
 
-export default function Complete() {
+export default function Complete({setComplete, values, setCardValues}) {
 
+    const onContinue = () =>{
+        setComplete(false)
+        setCardValues(values)
+    }
     return(
         <div className='w-4/5 m-auto'>
             <div className='text-center leading-[4rem] mb-6' >
@@ -11,7 +15,7 @@ export default function Complete() {
                 <p className='text-dark-grayish'>We have added your card details</p>
             </div>
             <div>
-                <Button>
+                <Button onClick={() => onContinue()}>
                     Continue
                 </Button>
             </div>
