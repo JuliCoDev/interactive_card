@@ -127,7 +127,8 @@ const useValidateInputCard = (intialValues : ErrorData) =>{
         validateYear,
         validateRequired,
         validateCvc,
-        validateVardName
+        validateVardName,
+        setvalidationInput
         
 
     }
