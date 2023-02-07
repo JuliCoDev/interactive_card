@@ -1,9 +1,7 @@
-import Label from "../styleComponents/Label";
 import Button from "../styleComponents/Button";
-
 import useValidateInputCard from "../hooks/useValidateInputCard";
 import { useState } from "react";
-import Complete from "./Complete";
+import Complete from "./Complete.jsx";
 import Cards from "./Cards";
 import Input from "../components/Input";
 
@@ -14,10 +12,7 @@ const initialValues = {
     month: '',
     cvc:'',
     year: '',
-    
-   
 } 
-
 
 const container=`     
     h-screen
@@ -25,6 +20,7 @@ const container=`
     lg:flex
     lg:items-center
 `;
+
 const containerCards = `
     absolute 
     w-full
@@ -38,16 +34,75 @@ const formContainer=`
     w-full
     lg:w-1/2
     lg:static
-
 `;
+
 const Form = `
     w-[80%] 
     m-auto
     md:w-[60%]    
     lg:max-w-[380px]
     xl:ml-[100px]
-    
 `;
+
+const FormFields = [
+    {
+        label: "CARD HOLDER NAME",
+        inputs: [{
+            name: 'cardholderName',  
+            placeholder: 'e.g. Jane Appleseed',
+            type: 'text',
+            length: 300,
+            grid: 'col-span-12'
+
+        }],
+        grid: 'col-span-12'
+    },
+    {
+        label: 'CARD NUMBER',
+        inputs: [{
+            name: 'cardNumber',  
+            placeholder: 'e.g. 1234 5678 9123 0000',
+            type: 'number',
+            length: 19,
+            grid: 'col-span-12'
+
+        }],
+        grid: 'col-span-12'  
+    },
+    {   
+        label: 'EXP. DATE',
+        inputs: [
+            {
+                name: 'month',  
+                placeholder: 'e.g. 05',
+                type: 'text',
+                length: 2,
+                grid: 'col-span-6'
+            },
+            {
+                name: 'year',  
+                placeholder: 'e.g. 25',
+                type: 'text',
+                length: 2,
+                grid: 'col-span-6'
+            }
+        ],
+        grid: 'col-span-6'    
+    },
+    {
+        label: 'CVC',
+        inputs: [
+            {
+                name: 'cvc',  
+                placeholder: 'e.g. 123',
+                type: 'text',
+                length: 3,
+                grid: 'col-span-12'
+            },
+        ],
+        grid: 'col-span-6' 
+    }
+]
 
 
 export default function Dashboard(){
@@ -78,7 +133,7 @@ export default function Dashboard(){
 
         Object.keys(validationInput).map((error) => {            
             Object.keys(cardValues).map((key) => {
-                if(cardValues[key] == '' && !validationInput[error]?.isValid){
+                if(cardValues[key] === '' && !validationInput[error]?.isValid){
                 validateRequired(key, cardValues[key]); 
                 }              
             })    
@@ -102,78 +157,20 @@ export default function Dashboard(){
                     <Cards cardValues={cardValues}/>                                    
                 </div>
                 <div className={formContainer}>
-                    <form className={Form} onSubmit={handleSubmit}>                    
-                        <div className="mb-4">
-                            <Label htmlFor="cardholderName">CARDHOLDER NAME</Label>
-                            <Input                             
-                                name="cardholderName" 
-                                placeholder="e.g Jane Appleseed" 
-                                type="text"                              
-                                vaidateInput={validateVardName}
-                                validationInput={validationInput}
-                                cardValues={cardValues}
-                                setCardValues={setCardValues} 
-                            />                        
-                        </div>
-                        <div className="mb-4">
-                            <Label htmlFor="cardNumber">CARD NUMBER</Label>
-                            <Input                            
-                                name="cardNumber" 
-                                placeholder="e.g. 1234 5678 9123 0000"
-                                type="text"                               
-                                maxLength={19}   
-                                vaidateInput={ValidateCardNumber}
-                                validationInput={validationInput}
-                                cardValues={cardValues}
-                                setCardValues={setCardValues}  
-                            />
-                        </div>
-                        
-                        <div className="flex justify-between mb-4 ">               
-                            <div className="w-2/4 ">
-                                <Label className="block">EXP. DATE</Label>
-                                <div className="flex justify-between">
-                                    <div className="inline-block w-2/4 box-border pr-2" >
-                                        <Input 
-                                            name="month" 
-                                            placeholder="MM" 
-                                            type="text"
-                                            cardValues={cardValues}
-                                            setCardValues={setCardValues}  
-                                            maxLength={2}   
-                                            vaidateInput={validateMonth}
-                                            validationInput={validationInput}
-                                        />
-                                    </div>
-                                    <div className="inline-block w-2/4" >
-                                        <Input 
-                                            name="year" 
-                                            placeholder="YY" 
-                                            type="text"    
-                                            cardValues={cardValues}
-                                            setCardValues={setCardValues}  
-                                            maxLength={2}   
-                                            vaidateInput={validateYear}
-                                            validationInput={validationInput}                
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div className="w-2/4 box-border pl-2 ">
-                                <Label className="block">CVC</Label>
-                                <Input 
-                                    name="cvc" 
-                                    placeholder="e.g. 123" 
-                                    type="text"    
-                                    cardValues={cardValues}
-                                    setCardValues={setCardValues}  
-                                    maxLength={3}   
-                                    vaidateInput={validateCvc}
-                                    validationInput={validationInput}  
-                                />
-                            </div>
-                        </div>
+                    <form className={Form}>
+                        <div className="grid grid-cols-12 gap-2">
+                            {FormFields.map((field, index) => {
+                                const {label, inputs, grid} = field
+                                return(                                                    
+                                    <Input
+                                        label={label}
+                                        inputs={inputs}
+                                        grid={grid}  
+                                        key={label}
+                                    />                                                
+                                )
+                            })}
+                        </div>                           
                         <div>
                             <Button type="submit"> 
                                 Confirm

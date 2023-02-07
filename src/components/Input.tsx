@@ -1,68 +1,45 @@
 import { default as InputContainer} from "../styleComponents/Input"
-import useFormatInputCard from "../hooks/useFormatInputCard";
-import ErrorInput from "../styleComponents/ErrorInput";
-import { CardData } from "../types";
-import React from "react";
 
-interface Props {
+import Label from "../styleComponents/Label";
+
+interface InputInfo{
     name: string
+    type: string
     placeholder: string
-    cardValues: CardData
-    setCardValues : any
-    maxLength: number
-    vaidateInput : any
-    validationInput: any
+    length: number
+    grid: string 
+    
 }
 
-export default function Input({
-    name,
-    placeholder,
-    cardValues,
-    setCardValues,
-    maxLength,
-    vaidateInput,
-    validationInput
-}: Props) {
+interface Props {
+    label: string
+    inputs: InputInfo[]
+    grid: string
 
-    //Format input
-    const {
-        formatCardInput,
-        changeFormatOnlyNumbers,
-        changeFormatCardNumber,
-    } = useFormatInputCard(cardValues);
-    
-    const handleChange   = (e : React.ChangeEvent<HTMLInputElement>) =>{
-        setCardValues({
-            ...cardValues,
-            [e.target.name] : e.target.value
-        })   
-        
-        if(e.target.name == "cardNumber"){
-            changeFormatCardNumber("cardNumber" , e.target.value);  
-        }else if(e.target.name !== "cardholderName"){
-            changeFormatOnlyNumbers(e.target.name , e.target.value)          
-        }
-    }
+}
 
+export default function Input(props: Props) {
+    const {label , inputs, grid} = props;
 
     return(
-        <div>
-            <InputContainer 
-                onChange={(e) => handleChange(e)} 
-                name={name} 
-                placeholder={placeholder} 
-                type="text" 
-                onBlur={(e) => vaidateInput(e.target.value)}     
-                className={validationInput[name].style}
-                value={(name == "cardholderName") ? cardValues[name as keyof CardData] : formatCardInput[name as keyof CardData]}       
-                maxLength={maxLength}
-                
-            />
-            {!validationInput[name].isValid && 
-                <ErrorInput>
-                    {validationInput[name].message}
-                </ErrorInput>                  
-            }
+        <div className={grid}>
+            <Label >{label}</Label>      
+            <div className="grid grid-cols-12 gap-2">
+                {inputs.map((input) => {
+                    const { name, type, placeholder, length, grid} = input;                
+                    return(
+                        <div className={grid} key={name}>
+                            <InputContainer 
+                                name={name}
+                                type={type}
+                                placeholder={placeholder}
+                                maxLength={length}                                
+                                className={grid}                                
+                            />
+                        </div>
+                    )
+                })}                    
+            </div>                               
         </div>
-    )   
+    )    
 }
