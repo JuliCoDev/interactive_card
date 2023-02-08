@@ -127,10 +127,7 @@ export default function Dashboard(){
     }
 
     const handleBlur = (e) =>{
-        setErros({
-            ...cardValues,
-            [e.target.name] : e.target.value
-        })
+        setErros( [e.target.name] , e.target.value)
     }
 
     const handleSubmit = (e) =>{

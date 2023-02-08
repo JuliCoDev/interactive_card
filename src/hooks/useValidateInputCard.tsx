@@ -21,10 +21,32 @@ interface ErrorData  {
     cvc: Error
 }
 
+interface Map {
+    [key: string]: any
+  }
+
 const useValidateInputCard = (intialValues : any) =>{
 
     const [validationInput , setvalidationInput] = useState(intialValues);
 
+    const validateCardNumber = (name : string , value: string) =>{
+        if(value.length < 5){
+            setvalidationInput((prevState : any) => {                          
+                return{
+                    ...prevState,
+                    [name]: {
+                        isValid : false,
+                        message: "Can't be blanck",
+                        style: "border-red-500 focus:border-red-500"
+                    }
+                }
+                
+            })
+        }   
+    }
+
+
+    
 
     const validateCorrect = (name: string) =>{        
         setvalidationInput({...validationInput,
@@ -35,19 +57,24 @@ const useValidateInputCard = (intialValues : any) =>{
             }
         })
     }
+
  
     //Review input to verify the errors
-    const setErros = (cardValues: any) =>{
+    const setErros = (name: string , value: any) =>{
+
+        //This indicate the validation each input
+        // const InputsWithValidation : Map = {
+        //     'cardNumber' : validateCardNumber("cardNumber", cardValues['cardNumber'])
+        // }
         
-        Object.keys(cardValues).map((key) => {
-            validateRequired(key, cardValues[key])
-        })
+        validateRequired(name, value);
+
+
     }
     
     
     //The input can''t be emty
     const validateRequired = (name : string, value : any) =>{ 
-        
         if(typeof value === 'string' && value.trim().length === 0){    
             setvalidationInput((prevState : any) => {                          
                 return{
@@ -67,7 +94,6 @@ const useValidateInputCard = (intialValues : any) =>{
         }
     }
     
-    console.log(validationInput);
     
     
     
