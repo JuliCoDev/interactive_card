@@ -62,8 +62,7 @@ const FormFields = [
         inputs: [{
             name: 'cardNumber',  
             placeholder: 'e.g. 1234 5678 9123 0000',
-            type: 'number',
-            length: 19,
+            type: 'number',            
             grid: 'col-span-12'
 
         }],
@@ -113,39 +112,47 @@ export default function Dashboard(){
        
     //Validate input
     const {
-        validationInput, 
-        validateRequired,
-        ValidateCardNumber,
-        validateMonth,
-        validateYear,
-        validateCvc,
-        validateVardName,
-        setvalidationInput
-
-    } = useValidateInputCard(cardValues);
+        validationInput,         
+        setErros
+    } = useValidateInputCard(initialValues);
 
 
-   
+    const handleChange = (e) =>{
+        setCardValues({
+            ...cardValues,
+            [e.target.name] : e.target.value
+        })
+
+
+    }
+
+    const handleBlur = (e) =>{
+        setErros({
+            ...cardValues,
+            [e.target.name] : e.target.value
+        })
+    }
+
     const handleSubmit = (e) =>{
         e.preventDefault();
 
-        const validations  =  Object.values(validationInput);
+        // const validations  =  Object.values(validationInput);
 
-        Object.keys(validationInput).map((error) => {            
-            Object.keys(cardValues).map((key) => {
-                if(cardValues[key] === '' && !validationInput[error]?.isValid){
-                validateRequired(key, cardValues[key]); 
-                }              
-            })    
-        })
+        // Object.keys(validationInput).map((error) => {            
+        //     Object.keys(cardValues).map((key) => {
+        //         if(cardValues[key] === '' && !validationInput[error]?.isValid){
+        //         validateRequired(key, cardValues[key]); 
+        //         }              
+        //     })    
+        // })
         
-        const isComplete = validations.some((validation) => {            
-            return !validation.isValid
-        })
+        // const isComplete = validations.some((validation) => {            
+        //     return !validation.isValid
+        // })
 
-        if(!isComplete){
-            setComplete(true)
-        }
+        // if(!isComplete){
+        //     setComplete(true)
+        // }
 
 
     }
@@ -167,6 +174,9 @@ export default function Dashboard(){
                                         inputs={inputs}
                                         grid={grid}  
                                         key={label}
+                                        change={handleChange}
+                                        errors={validationInput}
+                                        validate={handleBlur}
                                     />                                                
                                 )
                             })}
@@ -189,7 +199,7 @@ export default function Dashboard(){
                 setComplete={setComplete} 
                 values={initialValues} 
                 setCardValues={setCardValues}
-                setErros={setvalidationInput}
+                setErros={setErros}
             />
         </div>
     )

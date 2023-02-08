@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CardData } from "../types";
+import { CardData } from "../types"
 
 const error = {
     isValid : false,
@@ -21,11 +21,9 @@ interface ErrorData  {
     cvc: Error
 }
 
-const useValidateInputCard = (intialValues : ErrorData) =>{
+const useValidateInputCard = (intialValues : any) =>{
 
-    const [validationInput , setvalidationInput] = useState<ErrorData>(intialValues);
-
-    const currentYear = new Date().getFullYear();
+    const [validationInput , setvalidationInput] = useState(intialValues);
 
 
     const validateCorrect = (name: string) =>{        
@@ -38,12 +36,20 @@ const useValidateInputCard = (intialValues : ErrorData) =>{
         })
     }
  
+    //Review input to verify the errors
+    const setErros = (cardValues: any) =>{
+        
+        Object.keys(cardValues).map((key) => {
+            validateRequired(key, cardValues[key])
+        })
+    }
+    
+    
     //The input can''t be emty
-    const validateRequired = (name : string, value : string) =>{ 
+    const validateRequired = (name : string, value : any) =>{ 
         
         if(typeof value === 'string' && value.trim().length === 0){    
-
-            setvalidationInput((prevState) => {                          
+            setvalidationInput((prevState : any) => {                          
                 return{
                     ...prevState,
                     [name]: {
@@ -54,83 +60,20 @@ const useValidateInputCard = (intialValues : ErrorData) =>{
                 }
                 
             })
-            return false;
+            
+        }else{
 
-        }
-        validateCorrect(name);
-        return true
-    }
-
-    const validateVardName = (value: string) =>{
-        let required = validateRequired("cardholderName",value);   
-        if(required){
-            validateCorrect("cardholderName");
+            validateCorrect(name);
         }
     }
-
-    const ValidateCardNumber =  (value : string ) =>{           
-        let required = validateRequired("cardNumber",value);   
-        if(value.length < 19 && required){
-            setvalidationInput({...validationInput,
-                cardNumber: { ...error }
-            })      
-        }else if(required){
-            validateCorrect("cardNumber");
-        }
-    }
-
+    
+    console.log(validationInput);
     
     
-    const validateMonth = ( value : string) =>{
-        let required = validateRequired("month", value);   
-        if((value.length < 2 || parseInt(value) > 12)  && required){
-
-            setvalidationInput({...validationInput,
-                month: { ...error }
-            })
-        }else if(required){
-            validateCorrect("month");
-        }
-    }
-
-    const validateYear = (value : string) =>{
-        let required = validateRequired("year", value);
-       
-        if((value.length < 2 || parseInt(`20${value}`) < currentYear)  && required){
-
-            setvalidationInput({...validationInput,
-                year: { ...error }
-            })
-        }else if(required){
-            validateCorrect("year");
-        }
-    }
-
-    const validateCvc = (value : string) =>{
-        let required = validateRequired("cvc", value);
-       
-        if(value.length < 3 && required){
-
-            setvalidationInput({...validationInput,
-                cvc: { ...error }
-            })
-        }else if(required){
-            validateCorrect("cvc");
-        }
-    }
-
-
+    
     return{
-        validationInput, 
-        ValidateCardNumber,
-        validateMonth,
-        validateYear,
-        validateRequired,
-        validateCvc,
-        validateVardName,
-        setvalidationInput
-        
-
+        validationInput,
+        setErros   
     }
 }
 
