@@ -149,7 +149,7 @@ export default function Dashboard(){
 
 
     }
-    console.log(validationInput);
+    
     if(!complete){
         return(
             <div className={container}> 

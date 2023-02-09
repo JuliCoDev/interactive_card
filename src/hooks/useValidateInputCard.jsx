@@ -11,25 +11,32 @@ const useValidateInputCard = (intialValues) =>{
 
     const [validationInput , setvalidationInput] = useState(intialValues);
 
-    const validateCardNumber = (name, value) =>{       
+    const validateCardNumber = (type, name, value) =>{  
+        
         if(value.trim().length < 16){
-            setvalidationInput((prevState) => {                          
+            setvalidationInput((prevState) => {    
                 return{
                     ...prevState,
-                    [name]: {
+                    [type]: {  
+                        ...prevState[type],                      
+                        [name] : {
+                            name: name,
+                            style: "border-red-500 focus:border-red-500"
+                        },
                         isValid : false,
                         message: "Wrong format",
-                        style: "border-red-500 focus:border-red-500"
                     }
                 }
                 
             })
+            return 0;
         }   
+        return 1;
     }
 
     
 
-    const validateCorrect = (name) =>{        
+    const validateCorrect = (type, name) =>{        
         setvalidationInput({...validationInput,
             [name]: {
                 isValid : true,
@@ -39,21 +46,20 @@ const useValidateInputCard = (intialValues) =>{
         })
     }
     
-    //This indicate the validation each input
-    const InputsWithValidation= (value) => {
-        return(
-            { 
-                'cardNumber' : validateCardNumber("cardNumber", value),
-            }
-        )
-    }
+
  
     //Review input to verify the errors
-    const setErros = (type, name , value) =>{
-        return(
-            validateRequired(type, name, value) 
-            // InputsWithValidation('')[name]
-        )
+    const setErros = (type, name , value) =>{    
+        
+        const InputsWithValidation = {
+            "cardNumber" : () => { validateCardNumber(type, name, value)}
+        }
+
+
+        InputsWithValidation[name](type, name, value)
+        validateRequired(type, name, value)
+        
+        
     }
     
     

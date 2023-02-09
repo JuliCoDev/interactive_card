@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function Input(props) {  
     const { typeField , label, infoInputs, grid, validateInput, errors} = props;
-
+    console.log(errors)
     return(
         <div className={grid}>
             <Label >{label}</Label>      
