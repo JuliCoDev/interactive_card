@@ -47,6 +47,17 @@ const Form = `
   
 const FormFields = [
     {
+        label: "CARD HOLDER NAME NUMBER",
+        infoInputs : [
+            {
+                name: "cardholderName" , 
+                placeholder: "e.g. Jane Appleseed",
+                grid: 'col-span-12',                
+            }
+        ],
+        grid : 'col-span-12',    
+        typeField : 'cardholderName'
+    },{
         label: "CARD NUMBER",
         infoInputs : [
             {
@@ -73,6 +84,17 @@ const FormFields = [
         },
         grid : 'col-span-6',
         typeField : 'cardDate'
+    },{
+        label: "CVC",
+        infoInputs : [
+            {
+                name: "cvc" , 
+                placeholder: "e.g. 123",
+                grid: 'col-span-12',                
+            }
+        ],
+        grid : 'col-span-6',    
+        typeField : 'cvc'
     }
 ]
 
