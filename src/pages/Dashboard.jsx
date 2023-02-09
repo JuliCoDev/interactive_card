@@ -44,62 +44,35 @@ const Form = `
     xl:ml-[100px]
 `;
 
+  
 const FormFields = [
     {
-        label: "CARD HOLDER NAME",
-        inputs: [{
-            name: 'cardholderName',  
-            placeholder: 'e.g. Jane Appleseed',
-            type: 'text',
-            length: 300,
-            grid: 'col-span-12'
-
-        }],
-        grid: 'col-span-12'
-    },
-    {
-        label: 'CARD NUMBER',
-        inputs: [{
-            name: 'cardNumber',  
-            placeholder: 'e.g. 1234 5678 9123 0000',
-            type: 'number',            
-            grid: 'col-span-12'
-
-        }],
-        grid: 'col-span-12'  
-    },
-    {   
-        label: 'EXP. DATE',
-        inputs: [
+        label: "CARD NUMBER",
+        infoInputs : [
             {
-                name: 'month',  
-                placeholder: 'e.g. 05',
-                type: 'text',
-                length: 2,
-                grid: 'col-span-6'
-            },
-            {
-                name: 'year',  
-                placeholder: 'e.g. 25',
-                type: 'text',
-                length: 2,
-                grid: 'col-span-6'
+                name: "cardNumber" , 
+                placeholder: "e.g. 1234 5678 9123 0000",
+                grid: 'col-span-12',                
             }
         ],
-        grid: 'col-span-6'    
-    },
-    {
-        label: 'CVC',
-        inputs: [
-            {
-                name: 'cvc',  
-                placeholder: 'e.g. 123',
-                type: 'text',
-                length: 3,
-                grid: 'col-span-12'
+        grid : 'col-span-12',    
+        typeField : 'cardNumber'
+    },{
+        label : "EXP. DATE",
+        infoInputs : {
+            month: {
+                name: "month" , 
+                placeholder: "MM",
+                grid: 'col-span-6'
             },
-        ],
-        grid: 'col-span-6' 
+            year: {
+                name: "year" , 
+                placeholder: "YY",
+                grid: 'col-span-6'
+            }
+        },
+        grid : 'col-span-6',
+        typeField : 'cardDate'
     }
 ]
 
@@ -126,8 +99,9 @@ export default function Dashboard(){
 
     }
 
-    const handleBlur = (e) =>{
-        setErros( [e.target.name] , e.target.value)
+    const handleValidate = (e, typeField) =>   {   
+
+        setErros(typeField, e.target.name , e.target.value)
     }
 
     const handleSubmit = (e) =>{
@@ -153,7 +127,7 @@ export default function Dashboard(){
 
 
     }
-    
+    console.log(validationInput);
     if(!complete){
         return(
             <div className={container}> 
@@ -163,17 +137,15 @@ export default function Dashboard(){
                 <div className={formContainer}>
                     <form className={Form}>
                         <div className="grid grid-cols-12 gap-2">
-                            {FormFields.map((field, index) => {
-                                const {label, inputs, grid} = field
+                            {FormFields.map((field) => {  
                                 return(                                                    
                                     <Input
-                                        label={label}
-                                        inputs={inputs}
-                                        grid={grid}  
-                                        key={label}
-                                        change={handleChange}
-                                        errors={validationInput}
-                                        validate={handleBlur}
+                                       typeField={field.typeField}
+                                       label={field.label}
+                                       infoInputs={field.infoInputs}
+                                       grid={field.grid}
+                                       validateInput={(e) => handleValidate(e, field.typeField)}
+                                       errors={validationInput}
                                     />                                                
                                 )
                             })}
@@ -190,14 +162,14 @@ export default function Dashboard(){
         )
     }
 
-    return(
-        <div class="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
-            <Complete 
-                setComplete={setComplete} 
-                values={initialValues} 
-                setCardValues={setCardValues}
-                setErros={setErros}
-            />
-        </div>
-    )
+    // return(
+    //     <div class="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
+    //         <Complete 
+    //             setComplete={setComplete} 
+    //             values={initialValues} 
+    //             setCardValues={setCardValues}
+    //             setErros={setErros}
+    //         />
+    //     </div>
+    // )
 }
