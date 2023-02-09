@@ -48,27 +48,27 @@ const Form = `
 const FormFields = [
     {
         label: "CARD HOLDER NAME NUMBER",
-        infoInputs : [
-            {
-                name: "cardholderName" , 
-                placeholder: "e.g. Jane Appleseed",
-                grid: 'col-span-12',                
-            }
-        ],
+        infoInputs : [{
+            name: "cardholderName" ,                                    
+            placeholder: "e.g. Jane Appleseed",
+            grid: 'col-span-12',                
+        }],
         grid : 'col-span-12',    
         typeField : 'cardholderName'
-    },{
+    },
+
+    {
         label: "CARD NUMBER",
-        infoInputs : [
-            {
-                name: "cardNumber" , 
-                placeholder: "e.g. 1234 5678 9123 0000",
-                grid: 'col-span-12',                
-            }
-        ],
+        infoInputs : [{
+            name: "cardNumber" , 
+            placeholder: "e.g. 1234 5678 9123 0000",
+            grid: 'col-span-12',                
+        }],
         grid : 'col-span-12',    
         typeField : 'cardNumber'
-    },{
+    },
+    
+    {
         label : "EXP. DATE",
         infoInputs : {
             month: {
@@ -84,15 +84,15 @@ const FormFields = [
         },
         grid : 'col-span-6',
         typeField : 'cardDate'
-    },{
+    },
+    
+    {
         label: "CVC",
-        infoInputs : [
-            {
-                name: "cvc" , 
-                placeholder: "e.g. 123",
-                grid: 'col-span-12',                
-            }
-        ],
+        infoInputs : [{
+            name: "cvc" , 
+            placeholder: "e.g. 123",
+            grid: 'col-span-12',
+        }],
         grid : 'col-span-6',    
         typeField : 'cvc'
     }
@@ -122,7 +122,6 @@ export default function Dashboard(){
     }
 
     const handleValidate = (e, typeField) =>   {   
-
         setErros(typeField, e.target.name , e.target.value)
     }
 
