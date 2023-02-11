@@ -127,12 +127,12 @@ export default function Dashboard(){
        
     //Validate input
     const {
-        validationInput,         
-        setErros : setValidation
+        errors,         
+        setErros 
     } = useValidateInputCard(initialValues);
 
 
-    const handleChange = (e) =>{
+    const handleChange = (e) =>{        
         setCardValues({
             ...cardValues,
             [e.target.name] : e.target.value
@@ -142,7 +142,7 @@ export default function Dashboard(){
     }
 
     const handleValidate = (e, typeField, validations) =>   {                        
-        setValidation(typeField, e.target.name, validations, e.target.value);        
+        setErros(typeField, e.target.name, validations, e.target.value);        
     }
 
     const handleSubmit = (e) =>{
@@ -184,7 +184,7 @@ export default function Dashboard(){
                                     <Field label={label} grid={grid} key={index} >
                                         {Object.keys(infoInputs).map((input, index) =>{  
                                             const {placeholder, validations} = infoInputs[input]; 
-
+                                            
                                             return(                                                                                       
                                                 <Input 
                                                     name={input} 
@@ -192,6 +192,8 @@ export default function Dashboard(){
                                                     validations={(e) => handleValidate(e, typeField, validations)}
                                                     grid={infoInputs[input].grid}
                                                     key={index} 
+                                                    setCardValues={handleChange}
+                                                    errors={errors[typeField]}
                                                 />                                           
                                             )
                                         })}

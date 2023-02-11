@@ -3,7 +3,7 @@ import { useState } from "react"
 
 const useValidateInputCard = (intialValues) =>{
 
-    const [validationInput , setvalidationInput] = useState(intialValues);
+    const [errors , setvalidationInput] = useState(intialValues);
 
 
     const handleErrors = (type, name, message) =>{       
@@ -93,7 +93,7 @@ const useValidateInputCard = (intialValues) =>{
     }
  
     return{
-        validationInput,
+        errors,
         setErros   
     }
 }
