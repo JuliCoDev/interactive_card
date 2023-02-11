@@ -12,13 +12,12 @@ const useValidateInputCard = (intialValues) =>{
                 ...prevState,
                 [type]: {  
                     ...prevState[type],                      
-                    [name] : {
-                        name: name,
+                    [name] : {                        
                         style: "border-red-500 focus:border-red-500"
                     },
-                    isValid : false,
                     message: message,
-                }
+                    isValid : false,
+                },
             }
             
         }) 
@@ -26,45 +25,31 @@ const useValidateInputCard = (intialValues) =>{
     }
     
     //The input can''t be emty
-    const validateRequired = (type, name , value) =>{ 
+    const validateRequired = (type, name , value) =>{        
         if(typeof value === 'string' && value.trim().length === 0){  
-            return (handleErrors(type, name, "Can't be blanck"))                                                 
+            return handleErrors(type, name, "Can't be blanck")                                                            
         } 
     }
 
-    const validateLength = (minLength, type, name, value) => {
-        if(value.trim().length < minLength && value.trim().length !== 0){
-           return (handleErrors(type, name, "Wrong format"));                                 
+    const validateMinLength = (type, name, value, minLength) => {        
+        if(value.trim().length < minLength ){
+           return handleErrors(type, name, "Wrong format");                                 
         }
     }
 
-    const validateInput = (type, name, value, length) =>{    
-        let required =  validateRequired(type, name, value);       
-        let lenght =  validateLength(length, type, name, value);
-        
-        if(!required && !lenght){
-            validateCorrect(type, name) 
-        }else{
-            return true;//Have errors
+    const validateMinValue = (type, name, value, minValue) => {   
+        if(parseInt(value) < minValue){
+            return handleErrors(type, name, "Invalid date");                                 
         }
     }
 
-    const validateDate = (type, name, value) =>{                  
-        let error = validateInput(type, name, value, 2);
+    const validateMaxValue = (type, name, value, maxValue) => {   
 
-        if(name === "month" && parseInt(value) > 12){
-            error = handleErrors(type, name, "Invalid month")                
-        }else if(name === "year" && parseInt(value) < 23){
-            error = handleErrors(type, name, "Invalid year")          
-        }
-
-        if(!error){
-            validateCorrect(type, name) 
+        if(parseInt(value) > maxValue){
+            return handleErrors(type, name, "Invalid date");                                 
         }
     }
 
-
-    
 
     const validateCorrect = (type, name) =>{        
         setvalidationInput((prevState) => {    
@@ -73,7 +58,6 @@ const useValidateInputCard = (intialValues) =>{
                 [type]: {  
                     ...prevState[type],                      
                     [name] : {
-                        name: name,
                         style: ""
                     },
                     isValid : true,
@@ -86,18 +70,28 @@ const useValidateInputCard = (intialValues) =>{
 
  
     //Review input to verify the errors
-    const setErros = (type, name , value) =>{    
-    
-        const InputsWithValidation = {
-            "cardNumber" :      () => {validateInput(type, name, value, 16)} ,
-            "cardDate":         () => {validateDate(type, name, value) },
-            "cvc" :             () => {validateInput(type, name, value, 3)},        
-            "cardholderName" :  () => {validateRequired(type, name, value)}
-        }
-        InputsWithValidation[type](type, name, value) 
+    const setErros = (typeField, inputName, validations, value) =>{ 
+
+        const validationsInput = {
+            "required" : () => validateRequired(typeField, inputName , value),
+            "minLength" : (minlength) => validateMinLength(typeField, inputName, value, minlength),
+            "minValue" : (minValue) => validateMinValue(typeField, inputName, value, minValue),
+            "maxValue" : (maxValue) => validateMaxValue(typeField, inputName, value, maxValue)
+        } 
+        
+        Object.keys(validations)?.map(validation => { 
+            let required =validateRequired(typeField, inputName , value);
+            let error = required;
+            if(!required){
+                error = validationsInput[validation](validations[validation])
+            }
+            if(!error){
+                validateCorrect(typeField, inputName)
+            }            
+        });
+
     }
-    
-    
+ 
     return{
         validationInput,
         setErros   

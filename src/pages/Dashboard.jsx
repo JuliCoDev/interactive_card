@@ -4,6 +4,8 @@ import { useState } from "react";
 import Complete from "./Complete.jsx";
 import Cards from "./Cards";
 import Input from "../components/Input";
+import Label from "../styleComponents/Label";
+import Field from "../components/Fiel";
 
 
 const initialValues = {
@@ -44,26 +46,34 @@ const Form = `
     xl:ml-[100px]
 `;
 
-  
 const FormFields = [
     {
         label: "CARD HOLDER NAME NUMBER",
-        infoInputs : [{
-            name: "cardholderName" ,                                    
-            placeholder: "e.g. Jane Appleseed",
-            grid: 'col-span-12',                
-        }],
+        infoInputs :{
+            cardholderName: {                                         
+                placeholder: "e.g. Jane Appleseed",
+                grid: 'col-span-12',       
+                validations: {
+                    required: true
+                } 
+            }
+        },
         grid : 'col-span-12',    
         typeField : 'cardholderName'
     },
 
     {
         label: "CARD NUMBER",
-        infoInputs : [{
-            name: "cardNumber" , 
-            placeholder: "e.g. 1234 5678 9123 0000",
-            grid: 'col-span-12',                
-        }],
+        infoInputs :{
+            cardNumber : {
+                placeholder: "e.g. 1234 5678 9123 0000",
+                grid: 'col-span-12',   
+                validations: {
+                    required: true,
+                    minLength: 16
+                }                             
+            }
+        },
         grid : 'col-span-12',    
         typeField : 'cardNumber'
     },
@@ -74,12 +84,18 @@ const FormFields = [
             month: {
                 name: "month" , 
                 placeholder: "MM",
-                grid: 'col-span-6'
+                grid: 'col-span-6',
+                validations: {
+                    required: true,
+                }
             },
             year: {
                 name: "year" , 
                 placeholder: "YY",
-                grid: 'col-span-6'
+                grid: 'col-span-6',
+                validations: {
+                    required: true,
+                }
             }
         },
         grid : 'col-span-6',
@@ -88,11 +104,15 @@ const FormFields = [
     
     {
         label: "CVC",
-        infoInputs : [{
-            name: "cvc" , 
-            placeholder: "e.g. 123",
-            grid: 'col-span-12',
-        }],
+        infoInputs : {
+            cvc: {             
+                placeholder: "e.g. 123",
+                grid: 'col-span-12',
+                validations: {
+                    required: true,
+                }
+            }
+        },
         grid : 'col-span-6',    
         typeField : 'cvc'
     }
@@ -108,7 +128,7 @@ export default function Dashboard(){
     //Validate input
     const {
         validationInput,         
-        setErros
+        setErros : setValidation
     } = useValidateInputCard(initialValues);
 
 
@@ -121,8 +141,8 @@ export default function Dashboard(){
 
     }
 
-    const handleValidate = (e, typeField) =>   {   
-        setErros(typeField, e.target.name , e.target.value)
+    const handleValidate = (e, typeField, validations) =>   {                        
+        setValidation(typeField, e.target.name, validations, e.target.value);        
     }
 
     const handleSubmit = (e) =>{
@@ -158,19 +178,27 @@ export default function Dashboard(){
                 <div className={formContainer}>
                     <form className={Form}>
                         <div className="grid grid-cols-12 gap-2">
-                            {FormFields.map((field) => {  
-                                return(                                                    
-                                    <Input
-                                       typeField={field.typeField}
-                                       label={field.label}
-                                       infoInputs={field.infoInputs}
-                                       grid={field.grid}
-                                       validateInput={(e) => handleValidate(e, field.typeField)}
-                                       errors={validationInput}
-                                    />                                                
+                            {FormFields.map((field, index) => {
+                                const {infoInputs, typeField, label, grid} =  field;
+                                return(
+                                    <Field label={label} grid={grid} key={index} >
+                                        {Object.keys(infoInputs).map((input, index) =>{  
+                                            const {placeholder, validations} = infoInputs[input]; 
+
+                                            return(                                                                                       
+                                                <Input 
+                                                    name={input} 
+                                                    placeholder={placeholder}
+                                                    validations={(e) => handleValidate(e, typeField, validations)}
+                                                    grid={infoInputs[input].grid}
+                                                    key={index} 
+                                                />                                           
+                                            )
+                                        })}
+                                    </Field>                         
                                 )
                             })}
-                        </div>                           
+                        </div>
                         <div>
                             <Button type="submit"> 
                                 Confirm
