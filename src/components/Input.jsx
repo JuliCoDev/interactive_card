@@ -1,22 +1,19 @@
 import { default as InputContainer} from "../styleComponents/Input"
 import ErrorInput from "../styleComponents/ErrorInput";
-import Label from "../styleComponents/Label";
-
-
-
 
 
 export default function Input(props) {  
     const { setCardValues, name , placeholder, validations, grid , errors} = props;
-    console.log(errors[name]?.style)
-    return(
-        <div className={grid}>
+    
+    
+    return( 
+        <div className={grid} onBlur={validations}>
             <InputContainer 
                 name={name}
-                placeholder={placeholder} 
-                onBlur={validations}          
+                placeholder={placeholder}                           
                 onChange={setCardValues}
-                className={errors[name]?.style}   
+                className={errors?.[name]?.style}   
+                
             />                 
         </div>
     )    

@@ -1,11 +1,13 @@
 import Button from "../styleComponents/Button";
 import useValidateInputCard from "../hooks/useValidateInputCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Complete from "./Complete.jsx";
 import Cards from "./Cards";
 import Input from "../components/Input";
-import Label from "../styleComponents/Label";
 import Field from "../components/Fiel";
+import ErrorInput from "../styleComponents/ErrorInput";
+import Container from "../styleComponents/Container";
+import Label from "../styleComponents/Label";
 
 
 const initialValues = {
@@ -16,12 +18,6 @@ const initialValues = {
     year: '',
 } 
 
-const container=`     
-    h-screen
-    relative 
-    lg:flex
-    lg:items-center
-`;
 
 const containerCards = `
     absolute 
@@ -46,28 +42,29 @@ const Form = `
     xl:ml-[100px]
 `;
 
-const FormFields = [
-    {
+const FormFields = {
+    cardholderName: {
         label: "CARD HOLDER NAME NUMBER",
         infoInputs :{
             cardholderName: {                                         
                 placeholder: "e.g. Jane Appleseed",
-                grid: 'col-span-12',       
+                grid: 'col-span-12',     
+                value: '',  
                 validations: {
                     required: true
                 } 
             }
         },
         grid : 'col-span-12',    
-        typeField : 'cardholderName'
     },
 
-    {
+    cardNumber: {
         label: "CARD NUMBER",
         infoInputs :{
             cardNumber : {
                 placeholder: "e.g. 1234 5678 9123 0000",
-                grid: 'col-span-12',   
+                grid: 'col-span-12', 
+                value: '',    
                 validations: {
                     required: true,
                     minLength: 16
@@ -75,53 +72,54 @@ const FormFields = [
             }
         },
         grid : 'col-span-12',    
-        typeField : 'cardNumber'
     },
     
-    {
+    cardDate: {
         label : "EXP. DATE",
         infoInputs : {
             month: {
-                name: "month" , 
                 placeholder: "MM",
                 grid: 'col-span-6',
+                value: '',
                 validations: {
                     required: true,
+                    minLength: 2,                     
+                    maxValue: 12
                 }
             },
             year: {
-                name: "year" , 
                 placeholder: "YY",
                 grid: 'col-span-6',
+                value: '',
                 validations: {
                     required: true,
+                    minValue: 23
                 }
             }
         },
         grid : 'col-span-6',
-        typeField : 'cardDate'
     },
     
-    {
+    cvc: {
         label: "CVC",
         infoInputs : {
             cvc: {             
                 placeholder: "e.g. 123",
                 grid: 'col-span-12',
+                value: '',  
                 validations: {
                     required: true,
                 }
             }
         },
-        grid : 'col-span-6',    
-        typeField : 'cvc'
+        grid : 'col-span-6',   
     }
-]
+}
 
 
 export default function Dashboard(){
 
-    const [cardValues , setCardValues ] = useState(initialValues);
+    const [cardValues , setCardValues ] = useState(FormFields);
     const [complete , setComplete ] = useState(false);
     
        
@@ -132,17 +130,30 @@ export default function Dashboard(){
     } = useValidateInputCard(initialValues);
 
 
-    const handleChange = (e) =>{        
-        setCardValues({
+    const handleChange = (e, nameField) =>{  
+        let dataUpdate = {
             ...cardValues,
-            [e.target.name] : e.target.value
-        })
+            [nameField] : {
+                ...FormFields[nameField],
 
+                infoInputs :{
+                    
+                    [e.target.name] : { 
+                        ...FormFields[nameField].infoInputs[e.target.name],                   
+                        value : e.target.value
+                    }
+                }
+            }
+        }
 
+        setCardValues(dataUpdate);
+        
     }
 
-    const handleValidate = (e, typeField, validations) =>   {                        
-        setErros(typeField, e.target.name, validations, e.target.value);        
+    const handleValidate = (e, nameField) =>   {
+        
+        setErros(nameField , cardValues[nameField]?.infoInputs);
+        
     }
 
     const handleSubmit = (e) =>{
@@ -168,48 +179,52 @@ export default function Dashboard(){
 
 
     }
+
+    const renderForm = () => {
+        return(
+            Object.keys(FormFields).map(field => {
+                const { label, infoInputs} = FormFields[field]
+                return (
+                    <div className="mt-8 ml-8">
+                        <Label>{label}</Label>
+                        <br/>
+                        {renderInputs(infoInputs, errors[field], field)}
+
+                    </div>
+                )
+            })
+        )
+    }
+
+    const renderInputs = (inputs, error, nameField) => {
+        console.log(error);
+        return(
+            Object.keys(inputs).map(nameInput => {
+                const {placeholder} = inputs[nameInput];
+                return(
+                    <>
+                        <input 
+                            name={nameInput}
+                            placeholder={placeholder} 
+                            className="border-2"
+                            onChange={(e) => handleChange(e, nameField)}
+                            onBlur={(e) => handleValidate(e, nameField)}
+                        />
+                        <br/>
+                        <ErrorInput>
+                            {}
+                        </ErrorInput>
+                    </>
+                )
+            })
+        )
+    }
     
     if(!complete){
         return(
-            <div className={container}> 
-                <div className={containerCards}>
-                    <Cards cardValues={cardValues}/>                                    
-                </div>
-                <div className={formContainer}>
-                    <form className={Form}>
-                        <div className="grid grid-cols-12 gap-2">
-                            {FormFields.map((field, index) => {
-                                const {infoInputs, typeField, label, grid} =  field;
-                                return(
-                                    <Field label={label} grid={grid} key={index} >
-                                        {Object.keys(infoInputs).map((input, index) =>{  
-                                            const {placeholder, validations} = infoInputs[input]; 
-                                            
-                                            return(                                                                                       
-                                                <Input 
-                                                    name={input} 
-                                                    placeholder={placeholder}
-                                                    validations={(e) => handleValidate(e, typeField, validations)}
-                                                    grid={infoInputs[input].grid}
-                                                    key={index} 
-                                                    setCardValues={handleChange}
-                                                    errors={errors[typeField]}
-                                                />                                           
-                                            )
-                                        })}
-                                    </Field>                         
-                                )
-                            })}
-                        </div>
-                        <div>
-                            <Button type="submit"> 
-                                Confirm
-                            </Button>
-                        </div>
-                    </form>
-                </div> 
+            <div className="mt-60">                
+                {renderForm()}
             </div>
-            
         )
     }
 
