@@ -131,6 +131,7 @@ export default function Dashboard(){
 
 
     const handleChange = (e, nameField) =>{  
+        
         let dataUpdate = {
             ...cardValues,
             [nameField] : {
@@ -182,44 +183,26 @@ export default function Dashboard(){
 
     const renderForm = () => {
         return(
-            Object.keys(FormFields).map(field => {
-                const { label, infoInputs} = FormFields[field]
-                return (
-                    <div className="mt-8 ml-8">
-                        <Label>{label}</Label>
-                        <br/>
-                        {renderInputs(infoInputs, errors[field], field)}
-
-                    </div>
-                )
-            })
+            <div className="grid grid-cols-4 gap-4"> 
+                {Object.keys(FormFields).map(field => {
+                    const {infoInputs} = FormFields[field]
+                    return(
+                        <Field field={FormFields[field]} errors={errors} nameField={field}>
+                            <Input 
+                                inputs={infoInputs}
+                                error={errors?.[field]?.infoInputs}
+                                nameField={field}
+                                change={(e) => handleChange(e, field)}
+                                validateInput={(e) => handleValidate(e, field)}
+                            />  
+                        </Field>
+                    )
+                })}
+            </div>
+                    
         )
     }
 
-    const renderInputs = (inputs, error, nameField) => {
-        console.log(error);
-        return(
-            Object.keys(inputs).map(nameInput => {
-                const {placeholder} = inputs[nameInput];
-                return(
-                    <>
-                        <input 
-                            name={nameInput}
-                            placeholder={placeholder} 
-                            className="border-2"
-                            onChange={(e) => handleChange(e, nameField)}
-                            onBlur={(e) => handleValidate(e, nameField)}
-                        />
-                        <br/>
-                        <ErrorInput>
-                            {}
-                        </ErrorInput>
-                    </>
-                )
-            })
-        )
-    }
-    
     if(!complete){
         return(
             <div className="mt-60">                

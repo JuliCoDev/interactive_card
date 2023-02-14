@@ -6,11 +6,11 @@ const useValidateInputCard = () =>{
     const [errors , setvalidationInput] = useState({});
     const [field , setField] = useState("");
 
-    useEffect(() => {
+    useEffect(() => {       
         if(field !== ""){
             validateCorrectType(field);
         }
-    },[])
+    },[errors[field]?.infoInputs])
     const handleErrors = (type, name, message) =>{    
         setvalidationInput((prevState) => {                
             return{
@@ -48,7 +48,9 @@ const useValidateInputCard = () =>{
     }
 
     const validateMinValue = (type, name, value, minValue) => {   
+        
         if(parseInt(value) < minValue){
+            
             return handleErrors(type, name, "Invalid date");                                 
         }
     }
@@ -102,7 +104,7 @@ const useValidateInputCard = () =>{
             return !errors[nameField].infoInputs[validation].isValid;
 
         })
-        
+                
         if(!inputError){
             setvalidationInput((prevState) => {    
                 return{
@@ -114,7 +116,6 @@ const useValidateInputCard = () =>{
                     }
                 }
             })
-
        }
     }
 
@@ -125,8 +126,8 @@ const useValidateInputCard = () =>{
         const validationsInput = {
             "required" : (inputName , value) => validateRequired(nameField, inputName , value),
             "minLength" : (inputName, value, minlength) => validateMinLength(nameField, inputName, value, minlength),
-            // "minValue" : (minValue) => validateMinValue(typeField, inputName, value, minValue),
-            // "maxValue" : (maxValue) => validateMaxValue(typeField, inputName, value, maxValue)
+            "minValue" : (inputName, value, minValue) => validateMinValue(nameField, inputName, value, minValue),
+            "maxValue" : (inputName, value, maxValue) => validateMaxValue(nameField, inputName, value, maxValue)
         } 
         setField(nameField)
         Object.keys(objectFieldInputs).map(inputName =>{
@@ -134,41 +135,22 @@ const useValidateInputCard = () =>{
             const {validations, value} = objectFieldInputs[inputName];
 
             Object.keys(validations).map(validation =>{
-               
-                let error = validationsInput["required"](inputName , value)
+                let error = false;
+
+                if(validation !== "required") {                    
+                    error = validationsInput[validation](inputName , value, validations[validation])
+                }      
+                     
+                let required = false;       
+                required = validationsInput["required"](inputName , value, validations[validation])
                 
-                if(!error){
+                if(!error && !required){
                     validateCorrectInput(nameField, inputName);
                 }
             })
             
         })
         
-        
-
-        // //Validate all inputs into type Input
-        // Object.keys(typeField.infoInputs).map(input =>{        
-            
-        //     Object.keys(typeField.infoInputs[input]?.validations).map(validation => { 
-                
-
-        //         let required =validateRequired(typeField.typeField, input , value);
-
-        //         let error = required;
-
-        //         if(!required){
-        //             error = validationsInput[validation](validations[validation])                    
-        //         }
-
-        //         if(!error){
-        //             validateCorrectInput(typeField, inputName)
-        //             validateCorrectType(typeField, inputName);
-        //         }          
-                
-        //     });
-        // })
-
-
         
 
     }
