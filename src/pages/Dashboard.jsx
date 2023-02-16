@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Complete from "./Complete.jsx";
 import Cards from "./Cards";
 import Input from "../components/Input";
-import Field from "../components/Fiel";
-import ErrorInput from "../styleComponents/ErrorInput";
+import Field from "../components/Field";
 import Container from "../styleComponents/Container";
-import Label from "../styleComponents/Label";
+import Form from "../components/Form";
+import Card from "../styleComponents/Card";
+
 
 
 const initialValues = {
@@ -32,14 +33,14 @@ const formContainer=`
     w-full
     lg:w-1/2
     lg:static
+
 `;
 
-const Form = `
-    w-[80%] 
-    m-auto
-    md:w-[60%]    
-    lg:max-w-[380px]
-    xl:ml-[100px]
+const container=`     
+    h-screen
+    relative 
+    lg:flex
+    lg:items-center
 `;
 
 const FormFields = {
@@ -122,13 +123,12 @@ export default function Dashboard(){
     const [cardValues , setCardValues ] = useState(FormFields);
     const [complete , setComplete ] = useState(false);
     
-       
     //Validate input
     const {
         errors,         
         setErros 
     } = useValidateInputCard(initialValues);
-
+    
 
     const handleChange = (e, nameField) =>{  
         
@@ -136,9 +136,7 @@ export default function Dashboard(){
             ...cardValues,
             [nameField] : {
                 ...FormFields[nameField],
-
                 infoInputs :{
-                    
                     [e.target.name] : { 
                         ...FormFields[nameField].infoInputs[e.target.name],                   
                         value : e.target.value
@@ -151,7 +149,7 @@ export default function Dashboard(){
         
     }
 
-    const handleValidate = (e, nameField) =>   {
+    const handleValidate = (nameField) =>   {
         
         setErros(nameField , cardValues[nameField]?.infoInputs);
         
@@ -159,66 +157,74 @@ export default function Dashboard(){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-
-        // const validations  =  Object.values(validationInput);
-
-        // Object.keys(validationInput).map((error) => {            
-        //     Object.keys(cardValues).map((key) => {
-        //         if(cardValues[key] === '' && !validationInput[error]?.isValid){
-        //         validateRequired(key, cardValues[key]); 
-        //         }              
-        //     })    
-        // })
         
-        // const isComplete = validations.some((validation) => {            
-        //     return !validation.isValid
-        // })
+        Object.keys(cardValues).map((nameField) => {                        
+            setErros(nameField , cardValues[nameField]?.infoInputs);  
+            console.log(errors);  
+        })
 
-        // if(!isComplete){
-        //     setComplete(true)
-        // }
-
+        const validations  =  Object.values(errors);
+        
+        if(validations.length > 0){
+            const isComplete = validations.some((validation) => {      
+                return !validation.isValidType
+            })
+            
+    
+            if(!isComplete){
+                setComplete(true)
+            }
+        }
+        
 
     }
 
-    const renderForm = () => {
-        return(
-            <div className="grid grid-cols-4 gap-4"> 
-                {Object.keys(FormFields).map(field => {
-                    const {infoInputs} = FormFields[field]
-                    return(
-                        <Field field={FormFields[field]} errors={errors} nameField={field}>
-                            <Input 
-                                inputs={infoInputs}
-                                error={errors?.[field]?.infoInputs}
-                                nameField={field}
-                                change={(e) => handleChange(e, field)}
-                                validateInput={(e) => handleValidate(e, field)}
-                            />  
-                        </Field>
-                    )
-                })}
-            </div>
-                    
-        )
-    }
 
     if(!complete){
         return(
-            <div className="mt-60">                
-                {renderForm()}
-            </div>
+            <Container>
+                
+                <div className={containerCards}>
+                    <Cards cardValues={cardValues}/>
+                </div>
+                <div className={formContainer}>
+                    <Form handleSubmit={handleSubmit}>
+                        <div className="grid grid-cols-4 gap-4"> 
+                            {Object.keys(FormFields).map(field => {
+                                const {infoInputs} = FormFields[field]
+                                return(
+                                    <Field field={FormFields[field]} errors={errors} nameField={field}>
+                                        <Input 
+                                            inputs={infoInputs}
+                                            error={errors?.[field]?.infoInputs}
+                                            nameField={field}
+                                            change={(e) => handleChange(e, field)}
+                                            validateInput={() => handleValidate(field)}
+                                        />  
+                                    </Field>
+                                )
+                            })}
+                        </div>
+                        <div>
+                            <Button type="submit"> 
+                                Confirm
+                            </Button>
+                        </div>
+                    </Form>
+                </div>               
+                
+            </Container>
         )
     }
 
-    // return(
-    //     <div class="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
-    //         <Complete 
-    //             setComplete={setComplete} 
-    //             values={initialValues} 
-    //             setCardValues={setCardValues}
-    //             setErros={setErros}
-    //         />
-    //     </div>
-    // )
+    return(
+        <div class="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
+            <Complete 
+                setComplete={setComplete} 
+                values={FormFields} 
+                setCardValues={setCardValues}
+                setErros={setErros}
+            />
+        </div>
+    )
 }

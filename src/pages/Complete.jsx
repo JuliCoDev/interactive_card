@@ -6,8 +6,9 @@ export default function Complete({setComplete, values, setCardValues, setErros})
     const onContinue = () =>{
         setComplete(false);
         setCardValues(values);
-        setErros(values);
+        // setErros(values);
     }
+
     return(
         <div className='w-4/5 m-auto'>
             <div className='text-center leading-[4rem] mb-6' >

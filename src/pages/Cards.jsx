@@ -1,4 +1,4 @@
-import CardBack from "../components/Cards/CardBack";
+import CardBack from "../components/Cards/CardBack.jsx";
 import CardFront from "../components/Cards/CardFront";
 
 const container = `
@@ -35,12 +35,12 @@ const containerCardBack = `
 
 export default function Cards({cardValues}) {
     return(
-        <div className={container}>            
+        <div className={container}>   
             <div className={containerCardFront}>
                 <CardFront cardValues={cardValues}/>
             </div>
             <div className={containerCardBack}>
-                <CardBack cvc={cardValues.cvc}/>
+                <CardBack cvc={cardValues.cvc.infoInputs.cvc.value}/>
             </div>
         </div>
     )
