@@ -6,11 +6,12 @@ const useValidateInputCard = () =>{
     const [errors , setvalidationInput] = useState({});
     const [field , setField] = useState("");
 
-    useEffect(() => {       
-        if(field !== ""){
+    useEffect(() => {     
+        if(field !== "" && Object.entries(errors).length !== 0 ){
             validateCorrectType(field);
         }
     },[errors[field]?.infoInputs])
+
     const handleErrors = (type, name, message) =>{    
         setvalidationInput((prevState) => {                
             return{
@@ -98,13 +99,12 @@ const useValidateInputCard = () =>{
 
     const validateCorrectType = (nameField) =>{ 
                 
-
         
         let inputError = Object.keys(errors[nameField]?.infoInputs).some((validation) => {
             return !errors[nameField].infoInputs[validation].isValid;
 
         })
-                
+         
         if(!inputError){
             setvalidationInput((prevState) => {    
                 return{
@@ -123,16 +123,20 @@ const useValidateInputCard = () =>{
     //Review input to verify the errors
     const setErros = (nameField, objectFieldInputs) =>{ 
         
+        
         const validationsInput = {
             "required" : (inputName , value) => validateRequired(nameField, inputName , value),
             "minLength" : (inputName, value, minlength) => validateMinLength(nameField, inputName, value, minlength),
             "minValue" : (inputName, value, minValue) => validateMinValue(nameField, inputName, value, minValue),
             "maxValue" : (inputName, value, maxValue) => validateMaxValue(nameField, inputName, value, maxValue)
         } 
+
         setField(nameField)
+
         Object.keys(objectFieldInputs).map(inputName =>{
             
-            const {validations, value} = objectFieldInputs[inputName];
+            const {validations, value} = objectFieldInputs?.[inputName];
+            
 
             Object.keys(validations).map(validation =>{
                 let error = false;
@@ -155,10 +159,15 @@ const useValidateInputCard = () =>{
 
     }
 
+    const clearErrors = () =>{
+        setvalidationInput({});
+    }
+
  
     return{
         errors,
-        setErros   
+        setErros,  
+        clearErrors, 
     }
 }
 

@@ -126,25 +126,29 @@ export default function Dashboard(){
     //Validate input
     const {
         errors,         
-        setErros 
+        setErros,
+        clearErrors 
     } = useValidateInputCard(initialValues);
     
 
     const handleChange = (e, nameField) =>{  
         
+        
+
         let dataUpdate = {
             ...cardValues,
             [nameField] : {
-                ...FormFields[nameField],
+                ...cardValues[nameField],
                 infoInputs :{
+                    ...cardValues[nameField].infoInputs,                   
                     [e.target.name] : { 
-                        ...FormFields[nameField].infoInputs[e.target.name],                   
+                        ...cardValues[nameField].infoInputs[e.target.name],
                         value : e.target.value
                     }
                 }
             }
         }
-
+        
         setCardValues(dataUpdate);
         
     }
@@ -160,7 +164,7 @@ export default function Dashboard(){
         
         Object.keys(cardValues).map((nameField) => {                        
             setErros(nameField , cardValues[nameField]?.infoInputs);  
-            console.log(errors);  
+             
         })
 
         const validations  =  Object.values(errors);
@@ -223,7 +227,7 @@ export default function Dashboard(){
                 setComplete={setComplete} 
                 values={FormFields} 
                 setCardValues={setCardValues}
-                setErros={setErros}
+                clearErrors={clearErrors}
             />
         </div>
     )

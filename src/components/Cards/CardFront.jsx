@@ -4,6 +4,7 @@ import Card from "../../styleComponents/Card"
 
 export default function CardFront({cardValues}){
     const {cardNumber, cardholderName, cardDate} = cardValues;
+    
     return(
         <Card className={`text-white bg-[url("./assets/bg-card-front.png")] p-6`}>                    
             <div className="font-medium text-sm">
