@@ -1,29 +1,24 @@
+import { useContext } from "react";
+import { FieldsContext } from "../context/FieldsContext";
 import ErrorInput from "../styleComponents/ErrorInput"
 import Label from "../styleComponents/Label";
-
 const Field = ({ 
-    field, 
-    nameField,
     children, 
-    errors}) =>{
+    errors,
+    nameField
+}) =>{
     
-    const {grid, label} = field     
+    const Fields = useContext(FieldsContext);
+
+    
+    const {label, grid} = Fields.Fields[nameField];
     
     return (
-        <div className={`${grid}`}>
+        <div className={grid}>       
             <Label>{label}</Label>
             <div className="grid grid-cols-12 gap-2">
                 {children}
-
-                <div className="col-span-12">
-                    {!errors[nameField]?.isValidType &&
-                        <ErrorInput>
-                            {errors[nameField]?.message}
-                        </ErrorInput>
-                    }
-                </div>
-
-            </div>
+            </div> 
         </div>
     )
         

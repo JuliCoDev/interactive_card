@@ -36,24 +36,20 @@ const formContainer=`
 
 `;
 
-const container=`     
-    h-screen
-    relative 
-    lg:flex
-    lg:items-center
-`;
+
 
 const FormFields = {
     cardholderName: {
-        label: "CARD HOLDER NAME NUMBER",
+        label: "CARD HOLDER NAME",
         infoInputs :{
             cardholderName: {                                         
                 placeholder: "e.g. Jane Appleseed",
                 grid: 'col-span-12',     
                 value: '',  
+                defaultValue : 'Jane Appleseed',
                 validations: {
                     required: true
-                } 
+                },                
             }
         },
         grid : 'col-span-12',    
@@ -66,10 +62,11 @@ const FormFields = {
                 placeholder: "e.g. 1234 5678 9123 0000",
                 grid: 'col-span-12', 
                 value: '',    
+                defaultValue : '0000 000 000 0000',
                 validations: {
                     required: true,
                     minLength: 16
-                }                             
+                },                                                           
             }
         },
         grid : 'col-span-12',    
@@ -81,7 +78,8 @@ const FormFields = {
             month: {
                 placeholder: "MM",
                 grid: 'col-span-6',
-                value: '',
+                value: '',    
+                defaultValue : '00',
                 validations: {
                     required: true,
                     minLength: 2,                     
@@ -91,7 +89,8 @@ const FormFields = {
             year: {
                 placeholder: "YY",
                 grid: 'col-span-6',
-                value: '',
+                value: '',    
+                defaultValue : '00',
                 validations: {
                     required: true,
                     minValue: 23
@@ -107,7 +106,8 @@ const FormFields = {
             cvc: {             
                 placeholder: "e.g. 123",
                 grid: 'col-span-12',
-                value: '',  
+                value: '',    
+                defaultValue : '000',
                 validations: {
                     required: true,
                 }

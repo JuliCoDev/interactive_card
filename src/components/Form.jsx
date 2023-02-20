@@ -1,19 +1,89 @@
-
+import { useContext, useState } from "react";
+import { FieldsContext } from "../context/FieldsContext";
+import Field from "./Field";
+import Input from "./Input";
+import useValidateInputCard from "../hooks/useValidateInputCard";
+import ErrorInput from "../styleComponents/ErrorInput";
 
 const form = `
     w-[80%] 
     m-auto
-    md:w-[60%]    
+    md:w-[60%]    -+
     lg:max-w-[380px]
     xl:ml-[100px]
     
 `;
+ 
+const Form = ({
+    children, 
+    handleSubmit,
+    gridCol,    
+}) =>{
+    
+    const contextField = useContext(FieldsContext);
 
-const Form = ({children, handleSubmit}) =>{
+    const {Fields , inputValues, setFieldsValues} = contextField;
+    
+    
+    //Validate input
+    const {
+        errors,         
+        setErros 
+    } = useValidateInputCard();
+    
+
+    const handleValidate = (nameField) =>   {
+        setErros(nameField , Fields[nameField]?.infoInputs)
+    }
+    
+    const handleChange = (e, nameField) =>{  
+        let dataUpdate = {
+            ...Fields,
+
+            [nameField] : {
+                ...Fields[nameField],
+                
+                infoInputs :{
+                    ...Fields[nameField].infoInputs,
+                    [e.target.name] : { 
+                        ...Fields[nameField].infoInputs[e.target.name],                   
+                        value : e.target.value
+                    }
+                }
+            }
+        }
+        
+        setFieldsValues(dataUpdate);
+
+    }
+
 
     return(        
-        <form className={form} onSubmit={handleSubmit}>
-            {children}
+        <form className={form}>
+            <div className="grid grid-cols-12 gap-2"> 
+                {Object.keys(Fields).map((nameField) => {
+                    const {infoInputs} = Fields[nameField];
+                    return(
+                        <Field nameField={nameField}>
+                            <Input 
+                                inputs={infoInputs} 
+                                validateInput={() => handleValidate(nameField)} 
+                                error={errors[nameField]}  
+                                change={handleChange}        
+                                nameField={nameField}
+                            />  
+                            <div className="col-span-12">
+                                {!errors?.[nameField]?.isValidType &&
+                                    <ErrorInput>
+                                        {errors?.[nameField]?.message}
+                                    </ErrorInput>
+                                }
+                            </div>
+                        </Field>
+                    )
+                })
+                }
+            </div>
         </form>    
     )
 }

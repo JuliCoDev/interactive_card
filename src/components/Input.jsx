@@ -9,21 +9,25 @@ export default function Input({
     change,
     validateInput,
 }) {  
-    
     return( 
-        Object.keys(inputs).map(nameInput => {
-            const {placeholder, grid} = inputs[nameInput];
-            return(
-                <div className={grid}>
-                    <InputContainer 
-                        name={nameInput}
-                        placeholder={placeholder} 
-                        className={`${error?.[nameInput]?.style}`}
-                        onChange={(e) => change(e, nameField)}
-                        onBlur={validateInput}                        
-                    />                 
-                </div>
-            )
-        })
+        <>
+           { Object.keys(inputs).map(nameInput => {
+                const {placeholder, grid} = inputs[nameInput];            
+                return(
+                    <div className={grid}>
+                        <InputContainer 
+                            name={nameInput}
+                            placeholder={placeholder} 
+                            className={`${error?.infoInputs?.[nameInput]?.style}`}
+                            onChange={(e) => change(e, nameField)}
+                            onBlur={validateInput}                        
+                        />                 
+                    </div>
+                   
+                )
+            })}
+
+            
+        </>
     )  
 }

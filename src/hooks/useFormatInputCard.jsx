@@ -2,12 +2,12 @@ import { useState } from "react";
 import { CardData } from "../types";
 
 
-const useFormatInputCard = (cardValues : CardData) =>{
+const useFormatInputCard = (cardValues) =>{
     
     const [formatCardInput , setFormatCardNumber] = useState<CardData>(cardValues);
 
 
-    const changeFormatOnlyNumbers = (name : string , text : string) => {
+    const changeFormatOnlyNumbers = (name , text) => {
         let textFormat =  text?.replace(/\s/g,'')//Quita espacios en blanco
         .replace(/[^0-9]/g, '')                         
 
@@ -18,7 +18,7 @@ const useFormatInputCard = (cardValues : CardData) =>{
     }
 
 
-    const changeFormatCardNumber = (name : string, text : string) =>{
+    const changeFormatCardNumber = (name, text) =>{
 
         let textFormat =  text.replace(/\s/g,'')//Quita espacios en blanco
         .replace(/[^0-9]/g, '')

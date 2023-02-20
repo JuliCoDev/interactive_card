@@ -16,8 +16,7 @@ const useValidateInputCard = () =>{
         setvalidationInput((prevState) => {                
             return{
                 ...prevState,
-                [type]: {  
-                    ...prevState[type],    
+                [type]: {                         
                     infoInputs:{ 
                         ...prevState[type]?.infoInputs,
                         [name] : {                        
@@ -98,8 +97,7 @@ const useValidateInputCard = () =>{
     }
 
     const validateCorrectType = (nameField) =>{ 
-                
-        
+                        
         let inputError = Object.keys(errors[nameField]?.infoInputs).some((validation) => {
             return !errors[nameField].infoInputs[validation].isValid;
 
@@ -137,7 +135,7 @@ const useValidateInputCard = () =>{
             
             const {validations, value} = objectFieldInputs?.[inputName];
             
-
+            
             Object.keys(validations).map(validation =>{
                 let error = false;
 
