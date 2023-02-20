@@ -7,7 +7,7 @@ import Input from "../components/Input";
 import Field from "../components/Field";
 import Container from "../styleComponents/Container";
 import Form from "../components/Form";
-import Card from "../styleComponents/Card";
+import useFormatInputCard from "../hooks/useFormatInputCard";
 
 
 
@@ -130,6 +130,7 @@ export default function Dashboard(){
         clearErrors 
     } = useValidateInputCard(initialValues);
     
+    
 
     const handleChange = (e, nameField) =>{  
         
@@ -154,9 +155,7 @@ export default function Dashboard(){
     }
 
     const handleValidate = (nameField) =>   {
-        
         setErros(nameField , cardValues[nameField]?.infoInputs);
-        
     }
 
     const handleSubmit = (e) =>{
@@ -174,13 +173,11 @@ export default function Dashboard(){
                 return !validation.isValidType
             })
             
-    
+
             if(!isComplete){
                 setComplete(true)
             }
         }
-        
-
     }
 
 

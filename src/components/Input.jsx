@@ -8,11 +8,12 @@ export default function Input({
     nameField,
     change,
     validateInput,
+    format
 }) {  
     return( 
         <>
            { Object.keys(inputs).map(nameInput => {
-                const {placeholder, grid} = inputs[nameInput];            
+                const {placeholder, grid, maxLength} = inputs[nameInput];            
                 return(
                     <div className={grid}>
                         <InputContainer 
@@ -20,7 +21,9 @@ export default function Input({
                             placeholder={placeholder} 
                             className={`${error?.infoInputs?.[nameInput]?.style}`}
                             onChange={(e) => change(e, nameField)}
-                            onBlur={validateInput}                        
+                            onBlur={validateInput} 
+                            value={format?.[nameInput]}
+                            maxLength={maxLength}
                         />                 
                     </div>
                    

@@ -4,6 +4,7 @@ import Field from "./Field";
 import Input from "./Input";
 import useValidateInputCard from "../hooks/useValidateInputCard";
 import ErrorInput from "../styleComponents/ErrorInput";
+import useFormatInputCard from "../hooks/useFormatInputCard";
 
 const form = `
     w-[80%] 
@@ -30,13 +31,28 @@ const Form = ({
         errors,         
         setErros 
     } = useValidateInputCard();
-    
+
+    const {
+        formatCardInputs,
+        setFormat
+    } = useFormatInputCard();
+
 
     const handleValidate = (nameField) =>   {
         setErros(nameField , Fields[nameField]?.infoInputs)
     }
-    
+
+
+        
+
     const handleChange = (e, nameField) =>{  
+        const {format} = Fields[nameField]?.infoInputs?.[e.target.name];
+        if(format){
+            
+           setFormat(e.target.name,format ,  e.target.value);
+        }
+
+
         let dataUpdate = {
             ...Fields,
 
@@ -52,7 +68,7 @@ const Form = ({
                 }
             }
         }
-        
+
         setFieldsValues(dataUpdate);
 
     }
@@ -70,7 +86,8 @@ const Form = ({
                                 validateInput={() => handleValidate(nameField)} 
                                 error={errors[nameField]}  
                                 change={handleChange}        
-                                nameField={nameField}
+                                nameField={nameField} 
+                                format={formatCardInputs}                               
                             />  
                             <div className="col-span-12">
                                 {!errors?.[nameField]?.isValidType &&

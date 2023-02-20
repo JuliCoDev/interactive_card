@@ -1,41 +1,60 @@
 import { useState } from "react";
-import { CardData } from "../types";
 
 
-const useFormatInputCard = (cardValues) =>{
+const useFormatInputCard = () =>{
     
-    const [formatCardInput , setFormatCardNumber] = useState<CardData>(cardValues);
+    const [formatCardInputs , setFormatCardInputs] = useState({});
 
 
-    const changeFormatOnlyNumbers = (name , text) => {
+    const onlyNumbers = (name , text) => {
         let textFormat =  text?.replace(/\s/g,'')//Quita espacios en blanco
         .replace(/[^0-9]/g, '')                         
 
        
-        setFormatCardNumber({...formatCardInput,
+        setFormatCardInputs({...formatCardInputs,
             [name] : textFormat
         })
+        
     }
 
 
-    const changeFormatCardNumber = (name, text) =>{
-
+    const cardNumber = (name, text) =>{
+        
         let textFormat =  text.replace(/\s/g,'')//Quita espacios en blanco
         .replace(/[^0-9]/g, '')
         .replace(/([0-9]{4})/g, '$1 ');//Coloca un espacio cada 4 numeros
        
-        setFormatCardNumber({...formatCardInput,
-            [name] : textFormat.trim()
+        setFormatCardInputs((prevState) => {                
+            return{
+                ...prevState,
+                [name] : textFormat.trim()
+            }
         })
+
+        
     }
 
+
+    const setFormat = (name , format, value) => {
+        const validateFormat = {
+            "cardNumber" : () => cardNumber(name, value),
+            "onlyNumbers" : () => cardNumber(name, value),
+
+        } 
+        
+        Object.keys(format).map(typeFormat =>{
+            
+            return validateFormat[typeFormat]()
+        })
+
+    }
     
 
-    
+
     return{
-        formatCardInput,
-        changeFormatOnlyNumbers,
-        changeFormatCardNumber,
+        formatCardInputs,
+        setFormat
+   
     }
 }
 

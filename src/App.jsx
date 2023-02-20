@@ -1,7 +1,6 @@
 import './App.css';
-import { FieldsContext, FieldsCotextProvider } from './context/FieldsContext';
-import { useContext, useState } from 'react'; 
-import useValidateInputCard from './hooks/useValidateInputCard';
+import { FieldsCotextProvider } from './context/FieldsContext';
+import { useState } from 'react'; 
 import Container from './styleComponents/Container';
 import Form from './components/Form';
 import Cards from './pages/Cards';
@@ -30,9 +29,13 @@ const FormFields = {
               grid: 'col-span-12', 
               value: '',    
               validations: {
-                  required: true,
-                  minLength: 16
-              }                             
+                required: true,
+                minLength: 16
+              },
+              format :{
+                "cardNumber" : true
+              },
+              maxLength:19                             
           }
       },
       grid : 'col-span-12',    
@@ -49,7 +52,11 @@ const FormFields = {
                   required: true,
                   minLength: 2,                     
                   maxValue: 12
-              }
+              },
+              format :{
+                "onlyNumbers" : true
+              },
+              maxLength:2
           },
           year: {
               placeholder: "YY",
@@ -58,7 +65,11 @@ const FormFields = {
               validations: {
                   required: true,
                   minValue: 23
-              }
+              },
+              format :{
+                "onlyNumbers" : true
+              },
+              maxLength:2
           }
       },
       grid : 'col-span-6',
@@ -73,7 +84,11 @@ const FormFields = {
               value: '',  
               validations: {
                   required: true,
-              }
+              },
+              format :{
+                "onlyNumbers" : true
+              },
+              maxLength:3
           }
       },
       grid : 'col-span-6',   
@@ -97,25 +112,22 @@ const formContainer=`
 `;
 
 
-export default function App() {
-    const [complete , setComplete ] = useState(false);
-
-    
+export default function App() {   
 
 
     return (
         <FieldsCotextProvider fields={FormFields}>
-        <Container>
+            <Container>
 
-            <div className={containerCards}>
-                <Cards/>
-            </div>
+                <div className={containerCards}>
+                    <Cards/>
+                </div>
 
-            <div className={formContainer}>
-            <Form />
-            </div>
+                <div className={formContainer}>
+                    <Form />
+                </div>
 
-        </Container>
+            </Container>
         </FieldsCotextProvider>
         
   )
