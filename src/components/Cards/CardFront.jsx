@@ -13,11 +13,11 @@ export default function CardFront({cardValues}){
                 <div className="ml-4 w-[15px] h-[15px] border border-white rounded-full lg:w-[20px] lg:h-[20px]"></div>             
             </div>     
 
-            <div className="font-medium text-sm lg:text-lg">
+            <div className="font-medium text-sm lg:text-xl">
                 <p className="absolute bottom-[40%]">{cardInteractiveNumber}</p>
             </div>
 
-            <div className="font-light text-xs lg:text-base tracking-normal">
+            <div className="font-light text-xs lg:text-sm tracking-normal">
                 <p className="absolute bottom-6 w-3/5 whitespace-pre-wrap">
                     {cardholderName}
                 </p>
