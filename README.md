@@ -1,8 +1,8 @@
 # Interactive Credit Card 💳
 
-[Interactive Credit Card](https://julicodev-inteactive-card.netlify.app/) es un proyecto creado con el fin de poner en práctica habilidades de programación, buenas practicas e implementación de diferentes herramientas para poder cumplir con el desafio [Interactive card details form](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw)
+[Interactive Credit Card](https://julicodev-inteactive-challenge.netlify.app) es un proyecto creado con el fin de poner en práctica habilidades de programación, buenas practicas e implementación de diferentes herramientas para poder cumplir con el desafio [Interactive card details form](https://www.frontendmentor.io/challenges/interactive-card-details-form-XpS8cKZDWw)
 
-[Interactive Credit Card](https://julicodev-inteactive-card.netlify.app/) cuenta con diseño responsivo y validación de los campos del formulario, junto con la tarjeta que muestra los datos que el usuario ingresa en tiempo real.
+[Interactive Credit Card](https://julicodev-inteactive-challenge.netlify.app) cuenta con diseño responsivo y validación de los campos del formulario, junto con la tarjeta que muestra los datos que el usuario ingresa en tiempo real.
 
 <div align="center">
   <img width="60%" src="./public/images/interactive_card_desktop.png" alt="Interactive Card desktop" >
