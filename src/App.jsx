@@ -23,10 +23,10 @@ const FormFields = {
       grid : 'col-span-12',    
   },
 
-  cardNumber: {
+  cardInteractiveNumber: {
       label: "CARD NUMBER",
       infoInputs :{
-          cardNumber : {
+          cardInteractiveNumber : {
               placeholder: "e.g. 1234 5678 9123 0000",
               grid: 'col-span-12', 
               value: '',    
@@ -35,7 +35,7 @@ const FormFields = {
                 minLength: 16
               },
               format :{
-                "cardNumber" : true
+                "cardInteractiveNumber" : true
               },
               maxLength:19                             
           }
