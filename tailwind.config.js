@@ -18,7 +18,7 @@ module.exports = {
         
       },
       height: {
-        'card-mobile' : '150px'        
+        'card-mobile' : '170px'        
       }  
     },
   },

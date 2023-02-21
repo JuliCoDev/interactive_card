@@ -1,10 +1,8 @@
 import { useContext } from "react";
 import { FieldsContext } from "../context/FieldsContext";
-import ErrorInput from "../styleComponents/ErrorInput"
 import Label from "../styleComponents/Label";
 const Field = ({ 
-    children, 
-    errors,
+    children,
     nameField
 }) =>{
     
