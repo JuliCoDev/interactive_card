@@ -1,9 +1,11 @@
 import './App.css';
 import { FieldsCotextProvider } from './context/FieldsContext';
-import { useState } from 'react'; 
+import { useEffect, useState } from 'react'; 
 import Container from './styleComponents/Container';
 import Form from './components/Form';
 import Cards from './pages/Cards';
+import Complete from './pages/Complete';
+import useValidateInputCard from './hooks/useValidateInputCard';
 
 const FormFields = {
   cardholderName: {
@@ -112,25 +114,38 @@ const formContainer=`
 `;
 
 
-export default function App() {   
+export default function App() {
 
+    const [complete , setComplete ] = useState(false);
+    
 
-    return (
-        <FieldsCotextProvider fields={FormFields}>
-            <Container>
-
-                <div className={containerCards}>
-                    <Cards/>
-                </div>
-
-                <div className={formContainer}>
-                    <Form />
-                </div>
-
-            </Container>
-        </FieldsCotextProvider>
-        
-  )
+    
+    
+    if(!complete){
+        return (
+            <FieldsCotextProvider fields={FormFields}>
+                <Container>
+    
+                    <div className={containerCards}>
+                        <Cards/>
+                    </div>
+    
+                    <div className={formContainer}>
+                        <Form 
+                            setComplete={setComplete}
+                        />
+                    </div>
+    
+                </Container>
+            </FieldsCotextProvider>
+            
+      )
+    }
+    return(
+        <div className="absolute bottom-[20%] w-full lg:right-[10%] lg:w-1/2 lg:bottom-[30%]">
+            <Complete setComplete={setComplete} />
+        </div>
+    )
 
 }
 

@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { FieldsContext } from "../context/FieldsContext";
 import Field from "./Field";
 import Input from "./Input";
 import useValidateInputCard from "../hooks/useValidateInputCard";
 import ErrorInput from "../styleComponents/ErrorInput";
 import useFormatInputCard from "../hooks/useFormatInputCard";
+import Button from "../styleComponents/Button";
 
 const form = `
     w-[80%] 
@@ -16,21 +17,41 @@ const form = `
 `;
  
 const Form = ({
-    children, 
-    handleSubmit,
-    gridCol,    
+    setComplete,   
 }) =>{
     
     const contextField = useContext(FieldsContext);
 
-    const {Fields , inputValues, setFieldsValues} = contextField;
-    
+    const {Fields , setFieldsValues} = contextField;
     
     //Validate input
     const {
         errors,         
         setErros 
     } = useValidateInputCard();
+
+   
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        Object.keys(Fields).map((nameField) => {                      
+            setErros(nameField , Fields[nameField]?.infoInputs)
+        })
+
+        if(Object.entries(errors).length !== 0){
+            const errorFields =Object.keys(errors).map((error) => {  
+                          
+                return errors[error]?.isValidType
+            })
+            
+            
+            if(!errorFields.includes(false)){
+                setComplete(true)
+            }
+    
+        }
+
+    }
 
     const {
         formatCardInputs,
@@ -44,7 +65,6 @@ const Form = ({
 
 
         
-
     const handleChange = (e, nameField) =>{  
         const {format} = Fields[nameField]?.infoInputs?.[e.target.name];
         if(format){
@@ -73,9 +93,10 @@ const Form = ({
 
     }
 
+    
 
     return(        
-        <form className={form}>
+        <form className={form} onSubmit={handleSubmit}>
             <div className="grid grid-cols-12 gap-2"> 
                 {Object.keys(Fields).map((nameField) => {
                     const {infoInputs} = Fields[nameField];
@@ -100,7 +121,10 @@ const Form = ({
                     )
                 })
                 }
-            </div>
+            </div>            
+            <Button type="submit"> 
+                Confirm
+            </Button>
         </form>    
     )
 }

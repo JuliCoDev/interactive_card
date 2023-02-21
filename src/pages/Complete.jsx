@@ -1,12 +1,10 @@
 import CheckLogo from '../assets/icon-complete.svg';
 import Button from '../styleComponents/Button';
 
-export default function Complete({setComplete, values, setCardValues, clearErrors}) {
+export default function Complete({setComplete}) {
 
     const onContinue = () =>{
-        setComplete(false);
-        setCardValues(values);
-        clearErrors()
+        setComplete(false);        
     }
 
     return(
