@@ -39,13 +39,13 @@ const Form = ({
         })
 
         if(Object.entries(errors).length !== 0){
-            const errorFields =Object.keys(errors).map((error) => {  
+            const errorFields =Object.keys(errors).some((error) => {  
                           
-                return errors[error]?.isValidType
+                return !errors[error]?.isValidType
             })
             
             
-            if(!errorFields.includes(false)){
+            if(!errorFields){
                 setComplete(true)
             }
     

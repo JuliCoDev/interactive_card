@@ -86,6 +86,7 @@ const FormFields = {
               value: '',  
               validations: {
                   required: true,
+                  minLength: 3
               },
               format :{
                 "onlyNumbers" : true
