@@ -18,7 +18,7 @@ const useFormatInputCard = () =>{
     }
 
 
-    const cardInteractiveNumber = (name, text) =>{
+    const cardNumber = (name, text) =>{
         
         let textFormat =  text.replace(/\s/g,'')//Quita espacios en blanco
         .replace(/[^0-9]/g, '')
@@ -37,8 +37,8 @@ const useFormatInputCard = () =>{
 
     const setFormat = (name , format, value) => {
         const validateFormat = {
-            "cardInteractiveNumber" : () => cardInteractiveNumber(name, value),
-            "onlyNumbers" : () => onlyNumbers(name, value),
+            "cardNumber" : () => cardNumber(name, value),
+            "onlyNumbers" : () => cardNumber(name, value),
 
         } 
         

@@ -13,7 +13,7 @@ import useFormatInputCard from "../hooks/useFormatInputCard";
 
 const initialValues = {
     cardholderName: '',
-    cardInteractiveNumber: '',
+    cardNumber: '',
     month: '',
     cvc:'',
     year: '',
@@ -55,10 +55,10 @@ const FormFields = {
         grid : 'col-span-12',    
     },
 
-    cardInteractiveNumber: {
+    cardNumber: {
         label: "CARD NUMBER",
         infoInputs :{
-            cardInteractiveNumber : {
+            cardNumber : {
                 placeholder: "e.g. 1234 5678 9123 0000",
                 grid: 'col-span-12', 
                 value: '',    

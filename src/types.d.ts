@@ -1,6 +1,6 @@
 export interface CardData {
     cardholderName: string
-    cardInteractiveNumber: string
+    cardNumber: string
     month: string
     year: string
     cvc: number

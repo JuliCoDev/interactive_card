@@ -41,7 +41,7 @@ export default function Cards() {
 
     const defaultValues = {
         cardholderName : "Jane Appleseed",
-        cardInteractiveNumber: "0000 0000 0000 0000",
+        cardNumber: "0000 0000 0000 0000",
         month: "00",
         year: "00",
         cvc: "000"
