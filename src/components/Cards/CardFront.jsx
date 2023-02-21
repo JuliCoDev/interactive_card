@@ -3,7 +3,7 @@ import Card from "../../styleComponents/Card"
 
 
 export default function CardFront({cardValues}){
-    const {cardNumber, cardholderName, month, year} = cardValues;
+    const {cardInteractiveNumber, cardholderName, month, year} = cardValues;
     
     return(
 
@@ -12,10 +12,12 @@ export default function CardFront({cardValues}){
                 <div className="w-[30px] h-[30px] bg-white rounded-full lg:w-[40px] lg:h-[40px]"></div>      
                 <div className="ml-4 w-[15px] h-[15px] border border-white rounded-full lg:w-[20px] lg:h-[20px]"></div>             
             </div>     
-            <div className="font-medium text-sm">
-                <p className="absolute bottom-[40%]">{cardNumber}</p>
+
+            <div className="font-medium text-sm lg:text-lg">
+                <p className="absolute bottom-[40%]">{cardInteractiveNumber}</p>
             </div>
-            <div className="font-light text-xs tracking-normal">
+
+            <div className="font-light text-xs lg:text-base tracking-normal">
                 <p className="absolute bottom-6 w-3/5 whitespace-pre-wrap">
                     {cardholderName}
                 </p>
@@ -23,6 +25,7 @@ export default function CardFront({cardValues}){
                     {month}/{year}
                 </p>
             </div>
+
         </Card>
     )
 }

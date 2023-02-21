@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FieldsContext } from "../context/FieldsContext";
 import Field from "./Field";
 import Input from "./Input";
@@ -10,10 +10,9 @@ import Button from "../styleComponents/Button";
 const form = `
     w-[80%] 
     m-auto
-    md:w-[60%]    -+
-    lg:max-w-[380px]
-    xl:ml-[100px]
-    
+    md:w-[60%]
+    lg:max-w-[380px]    
+    xl:ml-[100px]       
 `;
  
 const Form = ({
@@ -39,8 +38,7 @@ const Form = ({
         })
 
         if(Object.entries(errors).length !== 0){
-            const errorFields =Object.keys(errors).some((error) => {  
-                          
+            const errorFields =Object.keys(errors).some((error) => {                            
                 return !errors[error]?.isValidType
             })
             

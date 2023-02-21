@@ -18,7 +18,7 @@ const containerCardFront = `
     top-[150px]     
     z-10
     lg:top-[-100px]
-    lg:left-[35%] 
+    lg:left-[25%] 
 
   
 `;
@@ -29,7 +29,7 @@ const containerCardBack = `
     right-[20px]
     top-[50px]
     lg:top-[150px]   
-    lg:left-[25%] 
+    lg:left-[35%] 
 
 `;
 
@@ -41,7 +41,7 @@ export default function Cards() {
 
     const defaultValues = {
         cardholderName : "Jane Appleseed",
-        cardNumber: "0000 0000 0000 0000",
+        cardInteractiveNumber: "0000 0000 0000 0000",
         month: "00",
         year: "00",
         cvc: "000"

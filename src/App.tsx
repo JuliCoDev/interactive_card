@@ -1,13 +1,13 @@
 import './App.css';
 import { FieldsCotextProvider } from './context/FieldsContext';
-import { useEffect, useState } from 'react'; 
+import { useState } from 'react'; 
 import Container from './styleComponents/Container';
 import Form from './components/Form';
 import Cards from './pages/Cards';
 import Complete from './pages/Complete';
-import useValidateInputCard from './hooks/useValidateInputCard';
+import { FieldData } from './types/Fields';
 
-const FormFields = {
+const FormFields : FieldData= {
   cardholderName: {
       label: "CARD HOLDER NAME NUMBER",
       infoInputs :{
@@ -23,10 +23,10 @@ const FormFields = {
       grid : 'col-span-12',    
   },
 
-  cardNumber: {
+  cardInteractiveNumber: {
       label: "CARD NUMBER",
       infoInputs :{
-          cardNumber : {
+          cardInteractiveNumber : {
               placeholder: "e.g. 1234 5678 9123 0000",
               grid: 'col-span-12', 
               value: '',    
@@ -35,7 +35,7 @@ const FormFields = {
                 minLength: 16
               },
               format :{
-                "cardNumber" : true
+                "cardInteractiveNumber" : true
               },
               maxLength:19                             
           }
@@ -117,9 +117,7 @@ const formContainer=`
 
 export default function App() {
 
-    const [complete , setComplete ] = useState(false);
-    
-
+    const [complete , setComplete ] = useState<boolean>(false);
     
     
     if(!complete){

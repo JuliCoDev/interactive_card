@@ -11,6 +11,8 @@ const Card = tw.div`
     sm:top-[80px]
     lg:w-[400px]
     lg:h-[200px]
+    xl:w-[440px]
+    xl:h-[220px]
 `;
 
 export default Card;
